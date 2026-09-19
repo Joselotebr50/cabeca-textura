@@ -101,6 +101,29 @@ const FASES = [
   { tema:'Brasil',         visual:'brasil',   emoji:'🇧🇷', animais: BICHOS_BR,                                                       opcoes:3, acertos:4 },
   { tema:'Fantástico',     visual:'fantasia', emoji:'🦄', animais: BICHOS_FANTASTICOS,                                               opcoes:4, acertos:5 }
 ];
+/* ============================================================
+   MATERIAIS DAS PLACAS POR TEMA
+   ============================================================ */
+const MATERIAL_POR_VISUAL = {
+  casa:     'madeira',
+  fazenda:  'palha',
+  selva:    'folha',
+  agua:     'gelo',
+  rainbow:  'nuvem',
+  trofeu:   'ouro',
+  brasil:   'madeira',
+  fantasia: 'cristal'
+};
+const MATERIAL_PADRAO = 'madeira';
+const MATERIAIS = ['madeira','gelo','folha','agua','nuvem','ouro','cristal','palha'];
+
+function aplicarMaterial(material){
+  const cls = 'placa-' + material;
+  document.querySelectorAll('.placa').forEach(el => {
+    MATERIAIS.forEach(m => el.classList.remove('placa-' + m));
+    el.classList.add(cls);
+  });
+}
 
 const POSICOES = {
   3: [{ x:14, y:42 }, { x:86, y:42 }, { x:50, y:86 }],
@@ -532,6 +555,7 @@ function abrirFase(numero){
   overlay.classList.add('hidden');
   overlay.innerHTML = '';
   mostrarTela('jogo');
+  aplicarMaterial(MATERIAL_POR_VISUAL[faseAtual.config.visual] || MATERIAL_PADRAO);  // ← NOVA LINHA
   aplicarTema(faseAtual.config.visual);
   requestAnimationFrame(() => {
     ajustarUnidade();
