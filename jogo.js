@@ -126,12 +126,13 @@ function aplicarMaterial(material){
   });
 }
 
+/* Posições dos slots no layout 1080x1920 (convertidas em %) */
 const POSICOES = {
-  3: [{ x:14, y:42 }, { x:86, y:42 }, { x:50, y:86 }],
-  4: [{ x:12, y:40 }, { x:88, y:40 }, { x:22, y:84 }, { x:78, y:84 }],
-  5: [{ x:12, y:22 }, { x:88, y:22 }, { x:10, y:68 }, { x:90, y:68 }, { x:50, y:92 }]
+  3: [{ x:16.2, y:37.5 }, { x:83.8, y:37.5 }, { x:50.0, y:70.3 }],
+  4: [{ x:16.2, y:37.5 }, { x:83.8, y:37.5 }, { x:12.0, y:54.7 }, { x:88.0, y:54.7 }],
+  5: [{ x:16.2, y:37.5 }, { x:83.8, y:37.5 }, { x:12.0, y:54.7 }, { x:88.0, y:54.7 }, { x:50.0, y:70.3 }]
 };
-const ALVO = { x:50, y:35 };
+const ALVO = { x:50, y:41.9 };  /* headSocket do layout */
 
 const STORAGE_PERFIS = 'cabecaAnimais.perfis.v2';
 const STORAGE_ANTIGO = 'cabecaAnimais.progresso.v1';
