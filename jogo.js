@@ -3,38 +3,32 @@
    ============================================================ */
 
 const ANIMAIS = {
-  /* Casa */
   gato:       { emoji:'🐱', nome:'Gato',       cor:'#F2A25C', escuro:'#D9833A', claro:'#FFD9B0', som:'Miau! Miau!',    tipo:'quadrupede', rabo:'longo' },
   cachorro:   { emoji:'🐶', nome:'Cachorro',   cor:'#C99A66', escuro:'#A87A48', claro:'#EBC9A3', som:'Au au! Au au!',  tipo:'quadrupede', rabo:'longo' },
   coelho:     { emoji:'🐰', nome:'Coelho',     cor:'#F0E8DF', escuro:'#B4A594', claro:'#FFFFFF', som:'Nhac nhac!',     tipo:'quadrupede', rabo:'curto' },
   passarinho: { emoji:'🐦', nome:'Passarinho', cor:'#7EC0E8', escuro:'#4A8FBC', claro:'#C8E8F8', som:'Piu piu!',       tipo:'ave' },
   peixinho:   { emoji:'🐠', nome:'Peixinho',   cor:'#FF8C6B', escuro:'#D5623F', claro:'#FFD1BE', som:'Glub glub!',     tipo:'peixe' },
   hamster:    { emoji:'🐹', nome:'Hamster',    cor:'#E2B878', escuro:'#B98E4D', claro:'#F8E4B8', som:'Iiii iiii!',     tipo:'quadrupede', rabo:'curto' },
-  /* Fazenda */
   vaca:       { emoji:'🐮', nome:'Vaca',       cor:'#F3EEE4', escuro:'#4A4A4A', claro:'#FFFFFF', som:'Muuu! Muuu!',    tipo:'quadrupede', rabo:'longo' },
   porco:      { emoji:'🐷', nome:'Porco',      cor:'#F5A8C0', escuro:'#DE7F9E', claro:'#FFD3E0', som:'Oinc! Oinc!',    tipo:'quadrupede', rabo:'encaracolado' },
   ovelha:     { emoji:'🐑', nome:'Ovelha',     cor:'#F0EBE1', escuro:'#C4B9A5', claro:'#FFFFFF', som:'Bééé! Bééé!',    tipo:'quadrupede', rabo:'curto' },
   galinha:    { emoji:'🐔', nome:'Galinha',    cor:'#FFE9A8', escuro:'#D9B84A', claro:'#FFF5CC', som:'Có có! Có có!',  tipo:'ave' },
   cavalo:     { emoji:'🐴', nome:'Cavalo',     cor:'#B07A50', escuro:'#8A5A34', claro:'#D8B080', som:'Iii hiii!',      tipo:'quadrupede', rabo:'longo' },
   pato:       { emoji:'🦆', nome:'Pato',       cor:'#F5E64C', escuro:'#C8B420', claro:'#FFF5A0', som:'Quá quá!',       tipo:'ave' },
-  /* Selva */
   leao:       { emoji:'🦁', nome:'Leão',       cor:'#E8B84B', escuro:'#C28F2A', claro:'#FFE6A8', som:'Roar!',          tipo:'quadrupede', rabo:'longo' },
   elefante:   { emoji:'🐘', nome:'Elefante',   cor:'#A0A4B0', escuro:'#70757F', claro:'#C8CCD6', som:'Fuummm!',        tipo:'quadrupede', rabo:'curto' },
   macaco:     { emoji:'🐵', nome:'Macaco',     cor:'#B08058', escuro:'#8A5F3C', claro:'#D8B088', som:'Uhu uhu ah ah!', tipo:'quadrupede', rabo:'longo' },
   tigre:      { emoji:'🐯', nome:'Tigre',      cor:'#F0A020', escuro:'#C77800', claro:'#FFD280', som:'Grrr!',          tipo:'quadrupede', rabo:'longo' },
   panda:      { emoji:'🐼', nome:'Panda',      cor:'#F8F8F8', escuro:'#444444', claro:'#FFFFFF', som:'Nhac nhac!',     tipo:'quadrupede', rabo:'curto' },
-  /* Água */
   sapo:       { emoji:'🐸', nome:'Sapo',       cor:'#7BC85C', escuro:'#5AA23C', claro:'#B6E89B', som:'Croac! Croac!',  tipo:'sapo' },
   golfinho:   { emoji:'🐬', nome:'Golfinho',   cor:'#88C8E8', escuro:'#5090B0', claro:'#C0E4F5', som:'Iii! Iii!',      tipo:'peixe' },
   baleia:     { emoji:'🐳', nome:'Baleia',     cor:'#6EB0D8', escuro:'#3D80A8', claro:'#A8D8F0', som:'Uuuuuu!',        tipo:'peixe' },
   pinguim:    { emoji:'🐧', nome:'Pinguim',    cor:'#3A3A3A', escuro:'#111111', claro:'#FFFFFF', som:'Nhonhonho!',     tipo:'ave' },
   tartaruga:  { emoji:'🐢', nome:'Tartaruga',  cor:'#7CB860', escuro:'#4A8A3A', claro:'#B0DC98', som:'Uuuu!',          tipo:'tartaruga' },
-  /* Brasil */
   onca:       { emoji:'🐆', nome:'Onça',       cor:'#E8C060', escuro:'#A07830', claro:'#FFF0C8', som:'Grrr! Grrr!',    tipo:'quadrupede', rabo:'longo', pintas:true },
   arara:      { emoji:'🦜', nome:'Arara',      cor:'#E05050', escuro:'#A02828', claro:'#FFD0B0', som:'Crá! Crá!',      tipo:'ave',       bico:'forte' },
   preguiça:   { emoji:'🦥', nome:'Preguiça',   cor:'#A08060', escuro:'#705840', claro:'#D8C0A8', som:'Uuuuu!',         tipo:'quadrupede', rabo:'curto' },
   jacare:     { emoji:'🐊', nome:'Jacaré',     cor:'#508050', escuro:'#305030', claro:'#90B090', som:'Grrr!',          tipo:'sapo',      escamas:true },
-  /* Fantásticos */
   trex:       { emoji:'🦖', nome:'T-Rex',      cor:'#6A9A50', escuro:'#3A6030', claro:'#A8D090', som:'ROAR!',          tipo:'quadrupede', rabo:'longo' },
   bronto:     { emoji:'🦕', nome:'Brontossauro',cor:'#8090A0',escuro:'#506070', claro:'#C0D0E0', som:'Uuuuu!',         tipo:'quadrupede', rabo:'longo' },
   dragao:     { emoji:'🐉', nome:'Dragão',     cor:'#C04040', escuro:'#802020', claro:'#FFB0B0', som:'Fuuuu!',         tipo:'dragao',    rabo:'longo' },
@@ -45,37 +39,14 @@ const BICHOS_BR = ['onca','arara','preguiça','jacare'];
 const BICHOS_FANTASTICOS = ['trex','bronto','dragao','unicornio'];
 
 const TEMAS = {
-  casa:    { fundo:'linear-gradient(180deg,#c8e8ff 0%,#e0f0ff 42%,#d8f0b8 100%)', decor:[
-              { e:'🏡', x:10, y:14, s:50 }, { e:'🌳', x:91, y:15, s:46 },
-              { e:'🌷', x:7, y:90, s:30 }, { e:'🌻', x:94, y:90, s:34 },
-              { e:'☀️', x:50, y:6, s:30 } ] },
-  fazenda: { fundo:'linear-gradient(180deg,#bfe6ff 0%,#e0f0c8 42%,#b8e090 100%)', decor:[
-              { e:'☀️', x:50, y:6, s:34 }, { e:'🌾', x:8, y:88, s:36 },
-              { e:'🌾', x:92, y:88, s:36 }, { e:'🌻', x:10, y:14, s:32 },
-              { e:'🚜', x:90, y:88, s:34 } ] },
-  selva:   { fundo:'linear-gradient(180deg,#3a7a30 0%,#6aa85a 45%,#88c878 100%)', decor:[
-              { e:'🌴', x:8, y:12, s:56 }, { e:'🌴', x:92, y:14, s:52 },
-              { e:'🌿', x:5, y:88, s:38 }, { e:'🍃', x:95, y:88, s:34 },
-              { e:'🐒', x:50, y:5, s:26 } ] },
-  agua:    { fundo:'linear-gradient(180deg,#bce8ff 0%,#7ec8e8 45%,#3a90c0 100%)', decor:[
-              { e:'🫧', x:10, y:12, s:32 }, { e:'🫧', x:88, y:18, s:26 },
-              { e:'🌊', x:8, y:91, s:42 }, { e:'🌊', x:92, y:91, s:42 },
-              { e:'🐚', x:50, y:93, s:26 } ] },
-  rainbow: { fundo:'linear-gradient(180deg,#ffd0e8 0%,#fff0a8 45%,#d0e8ff 100%)', decor:[
-              { e:'🌈', x:12, y:14, s:52 }, { e:'🎈', x:88, y:16, s:40 },
-              { e:'⭐', x:8, y:88, s:28 }, { e:'✨', x:92, y:90, s:30 } ] },
-  trofeu:  { fundo:'linear-gradient(180deg,#ffe9a8 0%,#ffd060 50%,#e8a020 100%)', decor:[
-              { e:'🏆', x:10, y:14, s:48 }, { e:'👑', x:90, y:12, s:42 },
-              { e:'⭐', x:8, y:90, s:28 }, { e:'🥇', x:92, y:90, s:32 },
-              { e:'✨', x:50, y:6, s:24 } ] },
-  brasil:  { fundo:'linear-gradient(180deg,#4aa848 0%,#88c070 45%,#e8d060 100%)', decor:[
-              { e:'🌴', x:8, y:14, s:54 }, { e:'🌴', x:92, y:16, s:50 },
-              { e:'🦜', x:50, y:6, s:30 }, { e:'🌺', x:7, y:88, s:34 },
-              { e:'🌿', x:93, y:88, s:34 } ] },
-  fantasia:{ fundo:'linear-gradient(180deg,#5a3080 0%,#9050c0 45%,#e0a0e8 100%)', decor:[
-              { e:'🌟', x:12, y:14, s:44 }, { e:'✨', x:88, y:16, s:40 },
-              { e:'🌙', x:8, y:88, s:40 }, { e:'💫', x:92, y:90, s:36 },
-              { e:'⭐', x:50, y:6, s:30 } ] }
+  casa:    { fundo:'linear-gradient(180deg,#c8e8ff 0%,#e0f0ff 42%,#d8f0b8 100%)', decor:[] },
+  fazenda: { fundo:'linear-gradient(180deg,#bfe6ff 0%,#e0f0c8 42%,#b8e090 100%)', decor:[] },
+  selva:   { fundo:'linear-gradient(180deg,#3a7a30 0%,#6aa85a 45%,#88c878 100%)', decor:[] },
+  agua:    { fundo:'linear-gradient(180deg,#bce8ff 0%,#7ec8e8 45%,#3a90c0 100%)', decor:[] },
+  rainbow: { fundo:'linear-gradient(180deg,#ffd0e8 0%,#fff0a8 45%,#d0e8ff 100%)', decor:[] },
+  trofeu:  { fundo:'linear-gradient(180deg,#ffe9a8 0%,#ffd060 50%,#e8a020 100%)', decor:[] },
+  brasil:  { fundo:'linear-gradient(180deg,#4aa848 0%,#88c070 45%,#e8d060 100%)', decor:[] },
+  fantasia:{ fundo:'linear-gradient(180deg,#5a3080 0%,#9050c0 45%,#e0a0e8 100%)', decor:[] }
 };
 
 const CONFETE_TEMA = {
@@ -102,9 +73,6 @@ const FASES = [
   { tema:'Fantástico',     visual:'fantasia', emoji:'🦄', animais: BICHOS_FANTASTICOS,                                               opcoes:4, acertos:5 }
 ];
 
-/* ============================================================
-   MATERIAIS DAS PLACAS POR TEMA
-   ============================================================ */
 const MATERIAL_POR_VISUAL = {
   casa:     'madeira',
   fazenda:  'palha',
@@ -126,18 +94,16 @@ function aplicarMaterial(material){
   });
 }
 
-/* Posições dos slots no layout 1080x1920 (convertidas em %) */
 const POSICOES = {
   3: [{ x:16.2, y:37.5 }, { x:83.8, y:37.5 }, { x:50.0, y:70.3 }],
   4: [{ x:16.2, y:37.5 }, { x:83.8, y:37.5 }, { x:12.0, y:54.7 }, { x:88.0, y:54.7 }],
   5: [{ x:16.2, y:37.5 }, { x:83.8, y:37.5 }, { x:12.0, y:54.7 }, { x:88.0, y:54.7 }, { x:50.0, y:70.3 }]
 };
-const ALVO = { x:50, y:41.9 };  /* headSocket do layout */
+const ALVO = { x:50, y:41.9 };
 
 const STORAGE_PERFIS = 'cabecaAnimais.perfis.v2';
 const STORAGE_ANTIGO = 'cabecaAnimais.progresso.v1';
 const AVATARES = ['🐱','🐶','🐰','🦁','🐼','🦊','🐸','🐵'];
-
 const PONTOS_POR_ACERTO = 10;
 
 let dados = { atual:null, perfis:{} };
@@ -169,7 +135,6 @@ function carregarPerfis(){
     salvarPerfis();
   }
   if (!dados.perfis[dados.atual]) dados.atual = Object.keys(dados.perfis)[0] || null;
-  /* migração: garante pontos em perfis antigos */
   Object.keys(dados.perfis).forEach(id => {
     if (typeof dados.perfis[id].pontos !== 'number') dados.perfis[id].pontos = 0;
   });
@@ -373,23 +338,17 @@ function bodyTartaruga(a){
 function bodyDragao(a){
   return `<svg viewBox="0 0 120 112" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <ellipse cx="60" cy="101" rx="40" ry="6" fill="#000" opacity=".09"/>
-    <path d="M60 48 L18 12 L30 40 L10 44 L34 56 L40 76 Z"
-          fill="${a.escuro}" opacity=".85"/>
-    <path d="M60 48 L102 12 L90 40 L110 44 L86 56 L80 76 Z"
-          fill="${a.escuro}" opacity=".85"/>
-    <path d="M95 54 L118 40 L114 62 L118 84 L95 66 Z"
-          fill="${a.escuro}" opacity=".9"/>
+    <path d="M60 48 L18 12 L30 40 L10 44 L34 56 L40 76 Z" fill="${a.escuro}" opacity=".85"/>
+    <path d="M60 48 L102 12 L90 40 L110 44 L86 56 L80 76 Z" fill="${a.escuro}" opacity=".85"/>
+    <path d="M95 54 L118 40 L114 62 L118 84 L95 66 Z" fill="${a.escuro}" opacity=".9"/>
     <rect x="26" y="72" width="15" height="24" rx="7" fill="${a.escuro}"/>
     <rect x="46" y="76" width="15" height="20" rx="7" fill="${a.cor}"/>
     <rect x="66" y="76" width="15" height="20" rx="7" fill="${a.cor}"/>
     <rect x="84" y="72" width="15" height="24" rx="7" fill="${a.escuro}"/>
-    <ellipse cx="60" cy="60" rx="45" ry="33" fill="${a.cor}"
-             stroke="${a.escuro}" stroke-opacity=".35" stroke-width="3"/>
+    <ellipse cx="60" cy="60" rx="45" ry="33" fill="${a.cor}" stroke="${a.escuro}" stroke-opacity=".35" stroke-width="3"/>
     <ellipse cx="60" cy="70" rx="28" ry="18" fill="${a.claro}" opacity=".5"/>
-    <path d="M38 44 q5 -8 10 0 q5 -8 10 0 q5 -8 10 0"
-          fill="none" stroke="${a.escuro}" stroke-width="3" stroke-linecap="round" opacity=".6"/>
-    <ellipse cx="60" cy="30" rx="17" ry="11" fill="${a.cor}"
-             stroke="${a.escuro}" stroke-opacity=".35" stroke-width="3"/>
+    <path d="M38 44 q5 -8 10 0 q5 -8 10 0 q5 -8 10 0" fill="none" stroke="${a.escuro}" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+    <ellipse cx="60" cy="30" rx="17" ry="11" fill="${a.cor}" stroke="${a.escuro}" stroke-opacity=".35" stroke-width="3"/>
   </svg>`;
 }
 
@@ -404,22 +363,12 @@ function aplicarTema(visual){
     stage.style.backgroundSize = 'cover';
     stage.style.backgroundPosition = 'center';
     stage.style.backgroundRepeat = 'no-repeat';
-    decor.innerHTML = '';
   };
   img.onerror = () => {
     stage.style.backgroundImage = t.fundo;
-    stage.style.backgroundSize = '';
-    stage.style.backgroundPosition = '';
-    stage.style.backgroundRepeat = '';
-    t.decor.forEach(d => {
-      const el = document.createElement('span');
-      el.className = 'decor-item';
-      el.textContent = d.e;
-      el.style.left = d.x + '%';
-      el.style.top  = d.y + '%';
-      el.style.fontSize = d.s + 'px';
-      decor.appendChild(el);
-    });
+    stage.style.backgroundSize = 'cover';
+    stage.style.backgroundPosition = 'center';
+    stage.style.backgroundRepeat = 'no-repeat';
   };
   img.src = caminho;
 }
@@ -442,9 +391,6 @@ function atualizarPerfilMenu(){
   perfilNome.textContent = p.nome;
 }
 
-/* ============================================================
-   HUD — Placar + Streak
-   ============================================================ */
 function atualizarHUD(){
   if (scoreTextEl)  scoreTextEl.textContent  = getPontos();
   if (streakTextEl) streakTextEl.textContent = streak + 'x';
@@ -572,7 +518,6 @@ function salvarNovoPerfil(){
   mostrarToast(`Olá, ${nome}!`);
 }
 
-/* ---------- ABRIR FASE ---------- */
 function abrirFase(numero){
   const i = Math.max(0, Math.min(FASES.length-1, numero-1));
   faseAtual = { index: i, config: FASES[i] };
@@ -703,7 +648,7 @@ function ligarArraste(el, animal){
     const cx = r.left + r.width/2  - sr.left;
     const cy = r.top  + r.height/2 - sr.top;
     const alvoX = sr.width  * 0.5;
-    const alvoY = sr.height * 0.52;
+    const alvoY = sr.height * 0.419;
     if (Math.hypot(cx-alvoX, cy-alvoY) < sr.width * 0.32) escolher(el, animal);
     else voltarAoLugar(el);
   }
@@ -748,7 +693,6 @@ function acertou(el){
   explodir(sr.width * (ALVO.x/100), sr.height * (ALVO.y/100));
   tocarAcerto();
 
-  /* pontuação + streak */
   setPontos(getPontos() + PONTOS_POR_ACERTO);
   streak++;
   atualizarHUD();
@@ -783,7 +727,6 @@ function errou(el){
   const inner = el.querySelector('.head-inner');
   inner.classList.add('shake');
   setTimeout(() => inner.classList.remove('shake'), 540);
-  /* streak volta a zero */
   if (streak > 0){
     streak = 0;
     atualizarHUD();
@@ -1011,7 +954,6 @@ document.getElementById('btnZerar').addEventListener('click', () => {
   }
 });
 
-/* ---------- TELA CHEIA ---------- */
 function estaTelaCheia(){
   return !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
 }

@@ -5,7 +5,6 @@
 let somLigado = true;
 let ctxAudio  = null;
 
-/* ---------- MOTOR DE ÁUDIO ---------- */
 function pegarCtx(){
   if (!ctxAudio){
     const AC = window.AudioContext || window.webkitAudioContext;
@@ -30,7 +29,6 @@ function nota(freq, inicio, dur, tipo='triangle', vol=0.16){
   o.start(t0); o.stop(t0 + dur + 0.06);
 }
 
-/* ---------- EFEITOS ---------- */
 function tocarAcerto(){
   nota(523.25, 0.00, 0.18);
   nota(659.25, 0.11, 0.18);
@@ -46,25 +44,15 @@ function tocarFanfarra(){
   nota(783.99, 0.26, 0.15);
   nota(1046.5, 0.40, 0.45);
 }
-
-/* ---------- COMBO (streak) ---------- */
-/* Toca uma nota que sobe de tom conforme o streak aumenta.
-   Streak 1 = base, streak 2 = mais agudo, etc. (até 8 níveis). */
 function tocarCombo(nivel){
   if (!somLigado) return;
   const n = Math.max(0, Math.min(nivel, 8));
-  /* base 880Hz sobe ~6% por nível */
   const freq = 880 * Math.pow(1.06, n);
-  /* nota principal (entra logo depois do acerto começar) */
   nota(freq, 0.38, 0.22, 'sine', 0.16);
-  /* camada brilhante nos streaks altos */
   if (n >= 4) nota(freq * 1.5, 0.42, 0.20, 'sine', 0.10);
   if (n >= 7) nota(freq * 2.0, 0.46, 0.18, 'sine', 0.08);
 }
 
-/* ============================================================
-   TRILHA SONORA — arpejo suave em pentatônica de C
-   ============================================================ */
 let musicaGanho  = null;
 let musicaTimer  = null;
 let musicaAtiva  = false;
@@ -131,7 +119,6 @@ function pararMusica(){
   }
 }
 
-/* ---------- VOZ (TTS) ---------- */
 function prepararVozes(){
   if (!('speechSynthesis' in window)) return;
   window.speechSynthesis.getVoices();
@@ -214,7 +201,6 @@ function falarNomeESom(idAnimal, nome, som, callback){
   setTimeout(finalizar, 8000);
 }
 
-/* ---------- PARAR / ALTERNAR ---------- */
 function pararAudio(){
   if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 }

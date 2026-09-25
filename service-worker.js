@@ -1,16 +1,9 @@
 /* ============================================================
    service-worker.js — cache offline para o PWA
-   ------------------------------------------------------------
-   Correções aplicadas:
-   - Filtro para requisições chrome-extension (evita erro no console)
-   - Install cacheia SÓ o essencial (não os 90 MB de imagens)
-   - Fetch filtra esquemas inválidos antes de tentar cachear
    ============================================================ */
 
 const CACHE = 'cabeca-v3';
 
-/* Só o essencial para o app abrir offline.
-   As imagens e fundos entram em cache aos poucos, durante o uso. */
 const ESSENCIAIS = [
   './',
   './index.html',
@@ -20,7 +13,6 @@ const ESSENCIAIS = [
   './manifest.json'
 ];
 
-/* ---------- INSTALAÇÃO ---------- */
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE).then(cache =>
@@ -31,7 +23,6 @@ self.addEventListener('install', event => {
   );
 });
 
-/* ---------- ATIVAÇÃO ---------- */
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
@@ -42,12 +33,8 @@ self.addEventListener('activate', event => {
   );
 });
 
-/* ---------- FETCH (cache primeiro, depois rede) ---------- */
 self.addEventListener('fetch', event => {
-  /* 1) Ignora métodos que não são GET */
   if (event.request.method !== 'GET') return;
-
-  /* 2) Ignora esquemas não suportados (chrome-extension:, data:, etc.) */
   const url = event.request.url;
   if (!url.startsWith('http://') && !url.startsWith('https://')) return;
 
@@ -56,7 +43,6 @@ self.addEventListener('fetch', event => {
       if (cached) return cached;
 
       return fetch(event.request).then(resposta => {
-        /* Cacheia o que foi baixado com sucesso (imagens, fundos, etc.) */
         if (resposta && resposta.status === 200 && resposta.type === 'basic'){
           const copia = resposta.clone();
           caches.open(CACHE).then(cache => {
@@ -65,7 +51,6 @@ self.addEventListener('fetch', event => {
         }
         return resposta;
       }).catch(() => {
-        /* Offline + navegação → devolve o index para o app abrir */
         if (event.request.mode === 'navigate'){
           return caches.match('./index.html');
         }

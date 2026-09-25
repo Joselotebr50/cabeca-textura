@@ -69,7 +69,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 .perfil-card.add .avatar{font-size:40px;color:#7fb0c8;}
 
 /* ============================================================
-   PLACAS — base comum (padrão = madeira)
+   PLACAS
    ============================================================ */
 .placa{
   --plate-bg:
@@ -99,11 +99,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
     0 10px 20px var(--plate-shadow);
 }
 
-/* ============================================================
-   MATERIAIS
-   ============================================================ */
-
-.placa-madeira{ /* herda tudo do .placa */ }
+.placa-madeira{}
 
 .placa-gelo{
   --plate-bg:
@@ -119,7 +115,6 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   --plate-drop: #24506E;
   --plate-shadow: rgba(0,50,100,0.45);
 }
-
 .placa-folha{
   --plate-bg:
     repeating-linear-gradient(90deg,
@@ -134,7 +129,6 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   --plate-drop: #163008;
   --plate-shadow: rgba(0,50,0,0.45);
 }
-
 .placa-agua{
   --plate-bg:
     repeating-linear-gradient(180deg,
@@ -149,7 +143,6 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   --plate-drop: #0A2540;
   --plate-shadow: rgba(0,40,80,0.45);
 }
-
 .placa-nuvem{
   --plate-bg:
     radial-gradient(circle at 20% 30%, rgba(255,255,255,0.95), rgba(255,255,255,0) 42%),
@@ -163,7 +156,6 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   --plate-drop: #6A85B0;
   --plate-shadow: rgba(80,120,180,0.35);
 }
-
 .placa-ouro{
   --plate-bg:
     repeating-linear-gradient(45deg,
@@ -178,7 +170,6 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   --plate-drop: #4A2E00;
   --plate-shadow: rgba(80,40,0,0.5);
 }
-
 .placa-cristal{
   --plate-bg:
     repeating-linear-gradient(120deg,
@@ -193,7 +184,6 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   --plate-drop: #2A0840;
   --plate-shadow: rgba(40,0,80,0.5);
 }
-
 .placa-palha{
   --plate-bg:
     repeating-linear-gradient(75deg,
@@ -210,56 +200,84 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 }
 
 /* ============================================================
-   TOPBAR DO JOGO
+   TELA DE JOGO — stage ocupa a TELA TODA
    ============================================================ */
-#telaJogo .topbar{padding: 8px 10px;}
-#telaJogo .topbar h2{
-  color: inherit;
-  text-shadow: inherit;
-  font-size: clamp(13px, 3.8vw, 17px);
-  letter-spacing: 1px;
-  font-weight: 800;
-}
-#telaJogo .topbar::before,
-#telaJogo .topbar::after{
-  content: '🌿';
-  position: absolute;
-  top: -14px;
-  font-size: 22px;
-  line-height: 1;
-  filter: drop-shadow(0 3px 4px rgba(0,0,0,0.35));
-  pointer-events: none;
-  transform: rotate(-20deg);
-}
-#telaJogo .topbar::before { left: 6px; }
-#telaJogo .topbar::after  { right: 6px; transform: rotate(20deg) scaleX(-1); }
+#telaJogo{padding:0;gap:0;display:block;}
 
-#telaJogo .topbar .icon-btn{
+#stage{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border-radius:0;
+  box-shadow:none;
+  overflow:hidden;
+  touch-action:none;
+  --hs: min(17vw, 80px);
+  transition:background .5s;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+}
+
+#decor{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.decor-item{position:absolute;transform:translate(-50%,-50%);opacity:.55;line-height:1;filter:drop-shadow(0 3px 6px #00000022);user-select:none;}
+
+#topbarJogo{
+  position:absolute;
+  left:50%;
+  top:9.6%;
+  transform:translate(-50%,-50%);
+  width:62%;
+  max-width:360px;
+  padding:6px 8px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:6px;
+  z-index:50;
+}
+#topbarJogo h2{
+  color:inherit;
+  text-shadow:inherit;
+  font-size:clamp(12px,3.5vw,16px);
+  letter-spacing:1px;
+  font-weight:800;
+  margin:0;
+  text-align:center;
+  flex:1;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+#topbarJogo .icon-btn{
+  padding:5px 9px;
+  font-size:14px;
+  min-width:30px;
   background: rgba(255,255,255,0.22);
   color: inherit;
   border: 1px solid rgba(0,0,0,0.3);
-  box-shadow: 0 3px 0 rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.4);
+  box-shadow: 0 2px 0 rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.4);
   text-shadow: inherit;
 }
-#telaJogo .topbar .icon-btn:active{
+#topbarJogo .icon-btn:active{
   transform: translateY(2px);
   box-shadow: 0 1px 0 rgba(0,0,0,0.35);
 }
 
-/* ============================================================
-   PIPS
-   ============================================================ */
 .pips{
+  position:absolute;
+  left:50%;
+  top:14.2%;
+  transform:translate(-50%,-50%);
   display:flex;
   justify-content:center;
   align-items:center;
-  gap:6px;
-  padding:8px 18px;
-  margin:0 auto;
-  border-radius:14px;
-  font-size:20px;
-  flex:0 0 auto;
-  max-width:100%;
+  gap:5px;
+  padding:6px 16px;
+  border-radius:12px;
+  font-size:17px;
+  z-index:50;
 }
 .pip{
   opacity:1;
@@ -269,76 +287,64 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 }
 .pip.done{
   filter:
-    brightness(1.4)
-    sepia(1)
-    saturate(2.5)
-    hue-rotate(-10deg)
+    brightness(1.4) sepia(1) saturate(2.5) hue-rotate(-10deg)
     drop-shadow(0 0 6px rgba(255,200,80,0.95))
     drop-shadow(0 0 12px rgba(255,180,40,0.6));
   transform: scale(1.15);
 }
 
-/* ============================================================
-   HUD — Placar + Streak
-   ============================================================ */
 #hudJogo{
+  position:absolute;
+  left:0;
+  right:0;
+  top:19.8%;
+  transform:translateY(-50%);
+  padding:0 4%;
   display:flex;
   justify-content:space-between;
   gap:10px;
-  padding:0 2px;
-  flex:0 0 auto;
+  z-index:50;
+  pointer-events:none;
 }
 .hud-painel{
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:8px;
-  padding:7px 18px;
-  min-width:110px;
-  font-size:clamp(16px,4.5vw,20px);
+  gap:6px;
+  padding:5px 14px;
+  min-width:88px;
+  font-size:clamp(14px,4vw,18px);
   font-weight:800;
-  letter-spacing:1px;
-  border-radius:14px;
+  letter-spacing:.5px;
+  border-radius:12px;
   transition: transform .1s;
+  pointer-events:auto;
 }
 .hud-painel .hud-icone{
-  font-size:1.15em;
+  font-size:1.1em;
   line-height:1;
   filter: drop-shadow(0 1px 1px rgba(0,0,0,0.35));
 }
 .hud-painel .hud-valor{
   font-variant-numeric: tabular-nums;
-  min-width: 1.6em;
+  min-width: 1.4em;
   text-align: center;
 }
-
-/* Pulso do combo (streak) */
-#hudStreak.pulse{
-  animation: comboPulse .55s cubic-bezier(.34,1.56,.64,1);
-}
+#hudStreak.pulse{animation: comboPulse .55s cubic-bezier(.34,1.56,.64,1);}
 @keyframes comboPulse{
   0%   { transform: scale(1);    filter: brightness(1);   }
-  30%  { transform: scale(1.18); filter: brightness(1.7); }
+  30%  { transform: scale(1.20); filter: brightness(1.75);}
   60%  { transform: scale(.96);  filter: brightness(1.25);}
   100% { transform: scale(1);    filter: brightness(1);   }
 }
 
-/* ============================================================
-   STAGE
-   ============================================================ */
-#stage{position:relative;margin:0 auto;width:min(100%, calc(100dvh - 250px));aspect-ratio:1/1;flex:0 0 auto;border-radius:30px;box-shadow:inset 0 0 0 3px #ffffff66, 0 12px 30px rgba(0,0,0,0.35);touch-action:none;overflow:hidden;--hs: min(18vw, 88px);transition:background .5s;background-size:cover;background-position:center;background-repeat:no-repeat;}
-
-#decor{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-.decor-item{position:absolute;transform:translate(-50%,-50%);opacity:.55;line-height:1;filter:drop-shadow(0 3px 6px #00000022);user-select:none;}
-
 .target{
   position:absolute;
   left:50%;
-  top:35%;
-  width:calc(var(--hs) * 2.8);
-  height:calc(var(--hs) * 2.8);
+  top:41.9%;
+  width:calc(var(--hs) * 2.6);
+  height:calc(var(--hs) * 2.6);
   border-radius:50%;
-  border:none;
   transform:translate(-50%,-50%);
   background:
     radial-gradient(circle,
@@ -356,7 +362,16 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   50%     { transform: translate(-50%,-50%) scale(1.10); opacity:1;   }
 }
 
-#bodyWrap{position:absolute;left:50%;top:52%;width:46%;transform:translate(-50%,-50%);pointer-events:none;transition:opacity .3s;z-index:2;}
+#bodyWrap{
+  position:absolute;
+  left:50%;
+  top:53.6%;
+  width:42%;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+  transition:opacity .3s;
+  z-index:2;
+}
 #bodyWrap svg,#bodyWrap img{width:100%;height:auto;display:block;}
 
 #heads{position:absolute;inset:0;pointer-events:none;z-index:5;}
@@ -373,12 +388,12 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 #nomeLabel{
   position:absolute;
   left:50%;
-  top:84%;
+  top:81%;
   transform:translate(-50%,-50%) scale(.4);
-  padding:10px 30px 12px;
-  border-radius:16px;
+  padding:8px 26px 10px;
+  border-radius:14px;
   font-weight:800;
-  font-size:clamp(16px,5vw,22px);
+  font-size:clamp(14px,4.5vw,20px);
   letter-spacing:2px;
   text-transform:uppercase;
   white-space:nowrap;
@@ -402,7 +417,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 @keyframes acena{0%{transform:translate(-50%,-50%) rotate(0) scale(1);}20%{transform:translate(-50%,-50%) rotate(-7deg) scale(1.08);}40%{transform:translate(-50%,-50%) rotate(7deg) scale(1.08);}60%{transform:translate(-50%,-50%) rotate(-5deg) scale(1.06);}80%{transform:translate(-50%,-50%) rotate(5deg) scale(1.06);}100%{transform:translate(-50%,-50%) rotate(0) scale(1);}}
 #bodyWrap.acenando{animation:acena .75s ease-in-out;}
 
-#overlay{position:absolute;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;background:#ffffffd9;border-radius:30px;transition:opacity .25s;padding:14px;}
+#overlay{position:absolute;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;background:#ffffffd9;transition:opacity .25s;padding:14px;}
 #overlay.hidden{opacity:0;pointer-events:none;}
 .win-card{text-align:center;padding:20px 22px 20px;background:#fff;border-radius:26px;box-shadow:0 14px 34px #00000026;animation:popin .45s cubic-bezier(.34,1.56,.64,1);max-width:100%;}
 @keyframes popin{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
@@ -433,7 +448,6 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 .modal-acoes button{flex:1;padding:12px;font-size:15px;border-radius:14px;background:linear-gradient(180deg,#ffd75e,#ffbb1a);color:#7a4d00;box-shadow:0 3px 0 #c78a00;}
 .modal-acoes button.sec{background:#fff;color:#1f6f9c;box-shadow:0 3px 0 #cfe6f2;}
 
-/* ===== CRIA SEU BICHO ===== */
 #criaStage{
   position:relative;
   margin:0 auto;
@@ -468,45 +482,15 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   font-size:min(20vw,120px);
   position:relative;
 }
-#criaHead.encaixada .head-inner{
-  background:transparent;
-  box-shadow:none;
-}
-#criaHead.encaixada .head-inner img{
-  width:100%;height:100%;
-}
-#criaHead .emoji-cabeca{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  font-size:min(20vw,120px);line-height:1;
-}
+#criaHead.encaixada .head-inner{background:transparent;box-shadow:none;}
+#criaHead.encaixada .head-inner img{width:100%;height:100%;}
+#criaHead .emoji-cabeca{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:min(20vw,120px);line-height:1;}
 
-.cria-controles{
-  display:flex;gap:8px;justify-content:center;
-  padding:4px 0;flex:0 0 auto;
-}
-.btn-cria{
-  padding:12px 16px;font-size:15px;border-radius:16px;
-  background:#fff;color:#1f6f9c;
-  box-shadow:0 4px 0 #cfe6f2, 0 6px 14px #5aa9d633;
-  transition:transform .1s, box-shadow .1s;
-  flex:0 0 auto;
-}
+.cria-controles{display:flex;gap:8px;justify-content:center;padding:4px 0;flex:0 0 auto;}
+.btn-cria{padding:12px 16px;font-size:15px;border-radius:16px;background:#fff;color:#1f6f9c;box-shadow:0 4px 0 #cfe6f2, 0 6px 14px #5aa9d633;transition:transform .1s, box-shadow .1s;flex:0 0 auto;}
 .btn-cria:active{transform:translateY(3px);box-shadow:0 1px 0 #cfe6f2;}
-.btn-cria.grande{
-  flex:1;
-  background:linear-gradient(180deg,#ffd75e,#ffbb1a);color:#7a4d00;
-  box-shadow:0 4px 0 #c78a00, 0 8px 18px #c78a0033;
-  font-size:17px;
-}
+.btn-cria.grande{flex:1;background:linear-gradient(180deg,#ffd75e,#ffbb1a);color:#7a4d00;box-shadow:0 4px 0 #c78a00, 0 8px 18px #c78a0033;font-size:17px;}
 .btn-cria.grande:active{box-shadow:0 1px 0 #c78a00;}
 
-.cria-nome{
-  text-align:center;font-size:clamp(16px,4.6vw,22px);
-  font-weight:800;color:#1f6f9c;
-  padding:6px 10px;
-  text-shadow:0 2px 0 #fff;
-  min-height:32px;
-  flex:0 0 auto;
-}
+.cria-nome{text-align:center;font-size:clamp(16px,4.6vw,22px);font-weight:800;color:#1f6f9c;padding:6px 10px;text-shadow:0 2px 0 #fff;min-height:32px;flex:0 0 auto;}
 .cria-nome .destaque{color:#ffbb1a;text-shadow:0 2px 0 #c78a00;}
