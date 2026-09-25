@@ -81,10 +81,20 @@
   <section id="telaJogo" class="tela hidden">
     <header class="topbar placa">
       <button id="btnJogoVoltar" class="icon-btn" aria-label="Voltar">←</button>
-      <h2 id="jogoTitulo">Fase 1</h2>
+      <h2 id="jogoTitulo">FASE 1 • CASA I</h2>
       <button id="btnReiniciarFase" class="icon-btn" aria-label="Recomeçar fase">🔄</button>
     </header>
     <div class="pips placa" id="pips"></div>
+    <div id="hudJogo">
+      <div class="hud-painel placa" id="hudScore">
+        <span class="hud-icone">⭐</span>
+        <span class="hud-valor" id="scoreText">0</span>
+      </div>
+      <div class="hud-painel placa" id="hudStreak">
+        <span class="hud-icone">🔥</span>
+        <span class="hud-valor" id="streakText">0x</span>
+      </div>
+    </div>
     <div id="stage">
       <div id="decor" aria-hidden="true"></div>
       <div class="target" aria-hidden="true"></div>

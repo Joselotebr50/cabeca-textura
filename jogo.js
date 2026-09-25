@@ -137,6 +137,8 @@ const STORAGE_PERFIS = 'cabecaAnimais.perfis.v2';
 const STORAGE_ANTIGO = 'cabecaAnimais.progresso.v1';
 const AVATARES = ['🐱','🐶','🐰','🦁','🐼','🦊','🐸','🐵'];
 
+const PONTOS_POR_ACERTO = 10;
+
 let dados = { atual:null, perfis:{} };
 
 function carregarPerfis(){
@@ -159,19 +161,26 @@ function carregarPerfis(){
     dados.perfis[id] = {
       nome: 'Jogador 1', avatar: '🐱',
       maxFase: (antigo && antigo.maxFase) || 1,
-      estrelas: (antigo && antigo.estrelas) || {}
+      estrelas: (antigo && antigo.estrelas) || {},
+      pontos: 0
     };
     dados.atual = id;
     salvarPerfis();
   }
   if (!dados.perfis[dados.atual]) dados.atual = Object.keys(dados.perfis)[0] || null;
+  /* migração: garante pontos em perfis antigos */
+  Object.keys(dados.perfis).forEach(id => {
+    if (typeof dados.perfis[id].pontos !== 'number') dados.perfis[id].pontos = 0;
+  });
 }
 function salvarPerfis(){ try{ localStorage.setItem(STORAGE_PERFIS, JSON.stringify(dados)); }catch(e){} }
 function perfilAtual(){ return dados.perfis[dados.atual] || null; }
+function getPontos(){ const p = perfilAtual(); return (p && typeof p.pontos === 'number') ? p.pontos : 0; }
+function setPontos(n){ const p = perfilAtual(); if (p){ p.pontos = n; salvarPerfis(); } }
 function criarPerfil(nome, avatar){
   if (Object.keys(dados.perfis).length >= 4) return null;
   const id = 'p' + Date.now();
-  dados.perfis[id] = { nome: nome.trim() || 'Jogador', avatar: avatar || '🐱', maxFase: 1, estrelas: {} };
+  dados.perfis[id] = { nome: nome.trim() || 'Jogador', avatar: avatar || '🐱', maxFase: 1, estrelas: {}, pontos: 0 };
   dados.atual = id;
   salvarPerfis();
   return id;
@@ -207,9 +216,13 @@ const perfilNome = document.getElementById('perfilNome');
 const criaBody   = document.getElementById('criaBody');
 const criaHead   = document.getElementById('criaHead');
 const criaNome   = document.getElementById('criaNome');
+const scoreTextEl = document.getElementById('scoreText');
+const streakTextEl = document.getElementById('streakText');
+const hudStreakEl = document.getElementById('hudStreak');
 
 let faseAtual = null;
 let acertos = 0, erros = 0;
+let streak = 0;
 let atual = null, ultimoId = null, travado = false;
 
 const rand = n => Math.floor(Math.random()*n);
@@ -428,6 +441,21 @@ function atualizarPerfilMenu(){
   perfilNome.textContent = p.nome;
 }
 
+/* ============================================================
+   HUD — Placar + Streak
+   ============================================================ */
+function atualizarHUD(){
+  if (scoreTextEl)  scoreTextEl.textContent  = getPontos();
+  if (streakTextEl) streakTextEl.textContent = streak + 'x';
+}
+function pulsarStreak(){
+  if (!hudStreakEl) return;
+  hudStreakEl.classList.remove('pulse');
+  void hudStreakEl.offsetWidth;
+  hudStreakEl.classList.add('pulse');
+  setTimeout(() => hudStreakEl.classList.remove('pulse'), 700);
+}
+
 function montarMapa(){
   const p = perfilAtual();
   if (!p) return;
@@ -461,7 +489,8 @@ function montarPerfis(){
       <button class="btn-apagar" data-id="${id}" aria-label="Apagar perfil">×</button>
       <div class="avatar">${p.avatar}</div>
       <div class="nome">${p.nome}</div>
-      <div class="fases-info">Fase ${p.maxFase} · ${Object.values(p.estrelas).reduce((a,b)=>a+b,0)}⭐</div>`;
+      <div class="fases-info">Fase ${p.maxFase} · ${Object.values(p.estrelas).reduce((a,b)=>a+b,0)}⭐</div>
+      <div class="pontos-info">⭐ ${p.pontos || 0} pontos</div>`;
     card.addEventListener('click', (e) => {
       if (e.target.classList.contains('btn-apagar')) return;
       trocarPerfil(id);
@@ -548,8 +577,9 @@ function abrirFase(numero){
   faseAtual = { index: i, config: FASES[i] };
   const tema = TEMAS[faseAtual.config.visual] || TEMAS.casa;
   document.body.style.background = tema.fundo;
-  jogoTitulo.textContent = `Fase ${numero} · ${faseAtual.config.tema}`;
+  jogoTitulo.textContent = `FASE ${numero} • ${faseAtual.config.tema.toUpperCase()}`;
   acertos = 0; erros = 0; ultimoId = null; atual = null; travado = false;
+  streak = 0;
   pararAudio();
   if (somLigado) iniciarMusica();
   overlay.classList.add('hidden');
@@ -557,6 +587,7 @@ function abrirFase(numero){
   mostrarTela('jogo');
   aplicarMaterial(MATERIAL_POR_VISUAL[faseAtual.config.visual] || MATERIAL_PADRAO);
   aplicarTema(faseAtual.config.visual);
+  atualizarHUD();
   requestAnimationFrame(() => {
     ajustarUnidade();
     iniciarRodada();
@@ -715,6 +746,14 @@ function acertou(el){
   [...headsEl.children].forEach(h => { if (h !== el) h.classList.add('esconder'); });
   explodir(sr.width * (ALVO.x/100), sr.height * (ALVO.y/100));
   tocarAcerto();
+
+  /* pontuação + streak */
+  setPontos(getPontos() + PONTOS_POR_ACERTO);
+  streak++;
+  atualizarHUD();
+  pulsarStreak();
+  tocarCombo(streak);
+
   setTimeout(() => {
     const letra = atual.nome.charAt(0).toUpperCase();
     nomeLabel.innerHTML = `${atual.emoji} <span class="letra-destaque">${letra}</span> de ${atual.nome.toUpperCase()}`;
@@ -743,6 +782,11 @@ function errou(el){
   const inner = el.querySelector('.head-inner');
   inner.classList.add('shake');
   setTimeout(() => inner.classList.remove('shake'), 540);
+  /* streak volta a zero */
+  if (streak > 0){
+    streak = 0;
+    atualizarHUD();
+  }
   setTimeout(() => { travado = false; }, 700);
 }
 
@@ -805,13 +849,16 @@ function terminarFase(){
   const titulo = ultima ? '🎖️ Mestre dos Bichinhos!' : 'Parabéns!';
   const msg = ultima
     ? `${p.avatar} ${p.nome} completou todas as fases!`
-    : `${p.avatar} ${p.nome} terminou a Fase ${num}!`;
+    : `${p.avatar} ${p.nome} terminou a FASE ${num}!`;
   overlay.innerHTML = `
     <div class="win-card">
       <div class="trofeu">${ultima ? '🏆' : '🎉'}</div>
       <h2>${titulo}</h2>
       <p>${msg}</p>
       <div class="estrelas-fim">${eHTML}</div>
+      <div class="pontos-fim">
+        <span>⭐ ${p.pontos || 0} pontos</span>
+      </div>
       <div class="acoes">
         ${btnProxima}
         <button id="btnRepetir" class="sec">🔁 Jogar de novo</button>
@@ -956,7 +1003,7 @@ btnSomMenu.addEventListener('click', () => { alternarSom(); atualizarIconeSom();
 document.getElementById('btnZerar').addEventListener('click', () => {
   const p = perfilAtual();
   if (confirm(`Apagar o progresso de "${p.nome}"?`)){
-    p.maxFase = 1; p.estrelas = {};
+    p.maxFase = 1; p.estrelas = {}; p.pontos = 0;
     salvarPerfis();
     montarMapa();
     mostrarToast('Progresso apagado!');
@@ -995,5 +1042,6 @@ if (btnTC) btnTC.addEventListener('click', alternarTelaCheia);
 carregarPerfis();
 atualizarPerfilMenu();
 atualizarIconeSom();
+atualizarHUD();
 mostrarTela('menu');
 window.addEventListener('load', () => setTimeout(ajustarUnidade, 60));
