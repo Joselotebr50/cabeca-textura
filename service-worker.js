@@ -7,7 +7,7 @@
    - Fetch filtra esquemas inválidos antes de tentar cachear
    ============================================================ */
 
-const CACHE = 'cabeca-v2';
+const CACHE = 'cabeca-v3';
 
 /* Só o essencial para o app abrir offline.
    As imagens e fundos entram em cache aos poucos, durante o uso. */
