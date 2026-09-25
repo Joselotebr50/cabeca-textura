@@ -428,7 +428,7 @@ function limparTema(){ stage.style.backgroundImage = ''; decor.innerHTML = ''; }
 function ajustarUnidade(){
   const w = stage.clientWidth || 320;
   const n = faseAtual ? faseAtual.config.opcoes : 3;
-  const fator = n >= 5 ? 0.18 : n === 4 ? 0.20 : 0.22;
+  const fator = n >= 5 ? 0.16 : n === 4 ? 0.17 : 0.20;
   stage.style.setProperty('--hs', (w * fator) + 'px');
 }
 window.addEventListener('resize', ajustarUnidade);
