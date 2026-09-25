@@ -29,12 +29,12 @@ const ANIMAIS = {
   baleia:     { emoji:'🐳', nome:'Baleia',     cor:'#6EB0D8', escuro:'#3D80A8', claro:'#A8D8F0', som:'Uuuuuu!',        tipo:'peixe' },
   pinguim:    { emoji:'🐧', nome:'Pinguim',    cor:'#3A3A3A', escuro:'#111111', claro:'#FFFFFF', som:'Nhonhonho!',     tipo:'ave' },
   tartaruga:  { emoji:'🐢', nome:'Tartaruga',  cor:'#7CB860', escuro:'#4A8A3A', claro:'#B0DC98', som:'Uuuu!',          tipo:'tartaruga' },
-  /* Brasil (novos) */
+  /* Brasil */
   onca:       { emoji:'🐆', nome:'Onça',       cor:'#E8C060', escuro:'#A07830', claro:'#FFF0C8', som:'Grrr! Grrr!',    tipo:'quadrupede', rabo:'longo', pintas:true },
   arara:      { emoji:'🦜', nome:'Arara',      cor:'#E05050', escuro:'#A02828', claro:'#FFD0B0', som:'Crá! Crá!',      tipo:'ave',       bico:'forte' },
   preguiça:   { emoji:'🦥', nome:'Preguiça',   cor:'#A08060', escuro:'#705840', claro:'#D8C0A8', som:'Uuuuu!',         tipo:'quadrupede', rabo:'curto' },
   jacare:     { emoji:'🐊', nome:'Jacaré',     cor:'#508050', escuro:'#305030', claro:'#90B090', som:'Grrr!',          tipo:'sapo',      escamas:true },
-  /* Fantásticos (novos) */
+  /* Fantásticos */
   trex:       { emoji:'🦖', nome:'T-Rex',      cor:'#6A9A50', escuro:'#3A6030', claro:'#A8D090', som:'ROAR!',          tipo:'quadrupede', rabo:'longo' },
   bronto:     { emoji:'🦕', nome:'Brontossauro',cor:'#8090A0',escuro:'#506070', claro:'#C0D0E0', som:'Uuuuu!',         tipo:'quadrupede', rabo:'longo' },
   dragao:     { emoji:'🐉', nome:'Dragão',     cor:'#C04040', escuro:'#802020', claro:'#FFB0B0', som:'Fuuuu!',         tipo:'dragao',    rabo:'longo' },
@@ -101,6 +101,7 @@ const FASES = [
   { tema:'Brasil',         visual:'brasil',   emoji:'🇧🇷', animais: BICHOS_BR,                                                       opcoes:3, acertos:4 },
   { tema:'Fantástico',     visual:'fantasia', emoji:'🦄', animais: BICHOS_FANTASTICOS,                                               opcoes:4, acertos:5 }
 ];
+
 /* ============================================================
    MATERIAIS DAS PLACAS POR TEMA
    ============================================================ */
@@ -355,7 +356,6 @@ function bodyTartaruga(a){
   </svg>`;
 }
 
-/* Dragão = quadrúpede + asas */
 function bodyDragao(a){
   return `<svg viewBox="0 0 120 112" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <ellipse cx="60" cy="101" rx="40" ry="6" fill="#000" opacity=".09"/>
@@ -555,7 +555,7 @@ function abrirFase(numero){
   overlay.classList.add('hidden');
   overlay.innerHTML = '';
   mostrarTela('jogo');
-  aplicarMaterial(MATERIAL_POR_VISUAL[faseAtual.config.visual] || MATERIAL_PADRAO);  // ← NOVA LINHA
+  aplicarMaterial(MATERIAL_POR_VISUAL[faseAtual.config.visual] || MATERIAL_PADRAO);
   aplicarTema(faseAtual.config.visual);
   requestAnimationFrame(() => {
     ajustarUnidade();
@@ -841,7 +841,6 @@ let criaCorpoId = null;
 let criaCabecaId = null;
 
 function atualizarCria(){
-  /* corpo */
   const aCorpo = ANIMAIS[criaCorpoId];
   criaBody.innerHTML = '';
   const imgCorpo = new Image();
@@ -850,7 +849,6 @@ function atualizarCria(){
   imgCorpo.onerror = () => { criaBody.innerHTML = bodySVG(aCorpo); };
   imgCorpo.src = `imagens/${criaCorpoId}_corpo.png`;
 
-  /* cabeça */
   const aCabeca = ANIMAIS[criaCabecaId];
   criaHead.innerHTML = '';
   const inner = document.createElement('div');
@@ -862,7 +860,6 @@ function atualizarCria(){
   imgCab.src = `imagens/${criaCabecaId}_cabeca.png`;
   criaHead.appendChild(inner);
 
-  /* nome combinado */
   const nome = `${aCorpo.nome} com cabeça de ${aCabeca.nome}`;
   const a1 = aCorpo.nome.charAt(0).toUpperCase();
   const a2 = aCabeca.nome.charAt(0).toUpperCase();
@@ -899,7 +896,6 @@ function abrirCria(){
   pararAudio();
   pararMusica();
   document.body.style.background = 'linear-gradient(180deg,#ffe0f0 0%,#fff8d8 50%,#c8e8ff 100%)';
-  /* inicia com dois bichos diferentes */
   const ids = Object.keys(ANIMAIS);
   criaCorpoId = ids[rand(ids.length)];
   do { criaCabecaId = ids[rand(ids.length)]; } while (criaCabecaId === criaCorpoId);
@@ -995,21 +991,6 @@ if (!suportaTelaCheia){ const b = document.getElementById('btnTelaCheia'); if (b
 ['fullscreenchange','webkitfullscreenchange','msfullscreenchange'].forEach(ev => document.addEventListener(ev, atualizarIconeTelaCheia));
 const btnTC = document.getElementById('btnTelaCheia');
 if (btnTC) btnTC.addEventListener('click', alternarTelaCheia);
-
-/* ============================================================
-   BOTÕES LATERAIS — dica e som do bicho atual
-   ============================================================ */
-document.querySelectorAll('.btn-lateral').forEach(btn => {
-  btn.textContent = btn.dataset.emoji;
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (!atual) return;
-    vibrar(15);
-    /* 🐸 = dica (fala o nome) | 🐦 = som do animal */
-    if (btn.dataset.emoji === '🐸') falar(atual.nome);
-    else                            falar(atual.som);
-  });
-});
 
 carregarPerfis();
 atualizarPerfilMenu();

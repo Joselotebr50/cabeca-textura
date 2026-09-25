@@ -79,22 +79,18 @@
   </section>
 
   <section id="telaJogo" class="tela hidden">
-    <header class="topbar placa-madeira">
+    <header class="topbar placa">
       <button id="btnJogoVoltar" class="icon-btn" aria-label="Voltar">←</button>
       <h2 id="jogoTitulo">Fase 1</h2>
       <button id="btnReiniciarFase" class="icon-btn" aria-label="Recomeçar fase">🔄</button>
     </header>
-    <div class="pips" id="pips"></div>
+    <div class="pips placa" id="pips"></div>
     <div id="stage">
       <div id="decor" aria-hidden="true"></div>
       <div class="target" aria-hidden="true"></div>
-      <div id="botoesLaterais" aria-hidden="true">
-        <button class="btn-lateral" data-emoji="🐸" aria-label="Dica"></button>
-        <button class="btn-lateral" data-emoji="🐦" aria-label="Ouvir som"></button>
-      </div>
       <div id="bodyWrap"></div>
       <div id="heads"></div>
-      <div id="nomeLabel" aria-live="polite"></div>
+      <div id="nomeLabel" class="placa" aria-live="polite"></div>
       <div id="toast" role="status"></div>
       <div id="overlay" class="hidden"></div>
     </div>

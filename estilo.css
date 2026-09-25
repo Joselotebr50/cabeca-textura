@@ -68,48 +68,160 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 .perfil-card.add .avatar{font-size:40px;color:#7fb0c8;}
 
 /* ============================================================
-   PLACA DE MADEIRA — base reutilizável
+   PLACAS — base comum (padrão = madeira)
    ============================================================ */
-.placa-madeira {
-  position: relative;
-  background:
-    repeating-linear-gradient(
-      180deg,
-      rgba(0,0,0,0.00) 0px,
-      rgba(0,0,0,0.06) 1px,
-      rgba(0,0,0,0.00) 3px,
-      rgba(255,220,160,0.08) 4px,
-      rgba(0,0,0,0.00) 7px
-    ),
+.placa{
+  --plate-bg:
+    repeating-linear-gradient(180deg,
+      rgba(0,0,0,0) 0px, rgba(0,0,0,.06) 1px,
+      rgba(0,0,0,0) 3px, rgba(255,220,160,.08) 4px,
+      rgba(0,0,0,0) 7px),
     linear-gradient(180deg, #B07E44 0%, #8B5A2B 42%, #6B4220 78%, #4A2C14 100%);
-  border: 3px solid #3A2010;
+  --plate-border: #3A2010;
+  --plate-fg: #FFF5D6;
+  --plate-text-shadow: 0 2px 0 #2A1808, 0 0 8px rgba(255,200,120,0.35);
+  --plate-hi: rgba(255,220,160,0.45);
+  --plate-lo: rgba(0,0,0,0.4);
+  --plate-drop: #2E1808;
+  --plate-shadow: rgba(0,0,0,0.45);
+
+  position: relative;
+  background: var(--plate-bg);
+  border: 3px solid var(--plate-border);
   border-radius: 16px;
+  color: var(--plate-fg);
+  text-shadow: var(--plate-text-shadow);
   box-shadow:
-    inset 0 3px 0 rgba(255,220,160,0.45),
-    inset 0 -4px 0 rgba(0,0,0,0.4),
-    inset 0 0 22px rgba(0,0,0,0.25),
-    0 6px 0 #2E1808,
-    0 10px 20px rgba(0,0,0,0.45);
-  color: #FFF5D6;
-  text-shadow: 0 2px 0 #2A1808, 0 0 8px rgba(255,200,120,0.35);
+    inset 0 3px 0 var(--plate-hi),
+    inset 0 -4px 0 var(--plate-lo),
+    0 6px 0 var(--plate-drop),
+    0 10px 20px var(--plate-shadow);
 }
 
 /* ============================================================
-   TOPBAR DO JOGO — placa de madeira com folhinhas
+   MATERIAIS
    ============================================================ */
-#telaJogo .topbar {
-  padding: 8px 10px;
-  border-radius: 16px;
+
+.placa-madeira{ /* herda tudo do .placa */ }
+
+.placa-gelo{
+  --plate-bg:
+    repeating-linear-gradient(160deg,
+      rgba(255,255,255,0.10) 0px, rgba(255,255,255,0) 3px,
+      rgba(255,255,255,0.14) 4px, rgba(255,255,255,0) 8px),
+    linear-gradient(180deg, #D6F2FF 0%, #A8DDF5 42%, #6FB8DE 78%, #4A8FBC 100%);
+  --plate-border: #2F5F80;
+  --plate-fg: #EAF7FF;
+  --plate-text-shadow: 0 2px 0 #2F5F80, 0 0 10px rgba(200,240,255,0.7);
+  --plate-hi: rgba(255,255,255,0.75);
+  --plate-lo: rgba(0,0,0,0.25);
+  --plate-drop: #24506E;
+  --plate-shadow: rgba(0,50,100,0.45);
 }
-#telaJogo .topbar h2 {
-  color: #FFF5D6;
-  text-shadow: 0 2px 0 #2A1808, 0 0 10px rgba(255,200,120,0.5);
+
+.placa-folha{
+  --plate-bg:
+    repeating-linear-gradient(90deg,
+      rgba(0,0,0,0.05) 0px, rgba(0,0,0,0) 6px,
+      rgba(255,255,255,0.07) 7px, rgba(0,0,0,0) 12px),
+    linear-gradient(180deg, #9ED86C 0%, #6FB43F 45%, #4A8A28 78%, #2E5A18 100%);
+  --plate-border: #1E4010;
+  --plate-fg: #F4FFE0;
+  --plate-text-shadow: 0 2px 0 #1E4010, 0 0 10px rgba(200,255,150,0.55);
+  --plate-hi: rgba(255,255,200,0.55);
+  --plate-lo: rgba(0,0,0,0.4);
+  --plate-drop: #163008;
+  --plate-shadow: rgba(0,50,0,0.45);
+}
+
+.placa-agua{
+  --plate-bg:
+    repeating-linear-gradient(180deg,
+      rgba(255,255,255,0.06) 0px, rgba(255,255,255,0) 3px,
+      rgba(255,255,255,0.10) 5px, rgba(255,255,255,0) 9px),
+    linear-gradient(180deg, #7CC8E8 0%, #4A9CC8 42%, #2E6EA0 78%, #1A4A78 100%);
+  --plate-border: #0F3055;
+  --plate-fg: #EAF7FF;
+  --plate-text-shadow: 0 2px 0 #0F3055, 0 0 10px rgba(180,230,255,0.65);
+  --plate-hi: rgba(255,255,255,0.55);
+  --plate-lo: rgba(0,0,0,0.35);
+  --plate-drop: #0A2540;
+  --plate-shadow: rgba(0,40,80,0.45);
+}
+
+.placa-nuvem{
+  --plate-bg:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.95), rgba(255,255,255,0) 42%),
+    radial-gradient(circle at 78% 68%, rgba(255,255,255,0.75), rgba(255,255,255,0) 38%),
+    linear-gradient(180deg, #FFFFFF 0%, #EAF3FF 45%, #C8DCF5 78%, #A8C4E8 100%);
+  --plate-border: #7A9BC8;
+  --plate-fg: #3A5A88;
+  --plate-text-shadow: 0 2px 0 #FFFFFF, 0 0 8px rgba(255,255,255,0.9);
+  --plate-hi: rgba(255,255,255,0.95);
+  --plate-lo: rgba(140,160,200,0.35);
+  --plate-drop: #6A85B0;
+  --plate-shadow: rgba(80,120,180,0.35);
+}
+
+.placa-ouro{
+  --plate-bg:
+    repeating-linear-gradient(45deg,
+      rgba(255,255,255,0.14) 0px, rgba(255,255,255,0) 4px,
+      rgba(255,255,255,0.18) 6px, rgba(255,255,255,0) 10px),
+    linear-gradient(180deg, #FFE888 0%, #F5C23A 42%, #C8922A 78%, #8A5E10 100%);
+  --plate-border: #5A3A00;
+  --plate-fg: #FFF8D0;
+  --plate-text-shadow: 0 2px 0 #5A3A00, 0 0 12px rgba(255,220,120,0.9);
+  --plate-hi: rgba(255,255,200,0.9);
+  --plate-lo: rgba(0,0,0,0.4);
+  --plate-drop: #4A2E00;
+  --plate-shadow: rgba(80,40,0,0.5);
+}
+
+.placa-cristal{
+  --plate-bg:
+    repeating-linear-gradient(120deg,
+      rgba(255,255,255,0.16) 0px, rgba(255,255,255,0) 5px,
+      rgba(255,255,255,0.22) 8px, rgba(255,255,255,0) 14px),
+    linear-gradient(180deg, #E8B8F0 0%, #B878D8 42%, #8848B0 78%, #5A2880 100%);
+  --plate-border: #3A1058;
+  --plate-fg: #FCE8FF;
+  --plate-text-shadow: 0 2px 0 #3A1058, 0 0 12px rgba(255,180,255,0.9);
+  --plate-hi: rgba(255,220,255,0.75);
+  --plate-lo: rgba(0,0,0,0.4);
+  --plate-drop: #2A0840;
+  --plate-shadow: rgba(40,0,80,0.5);
+}
+
+.placa-palha{
+  --plate-bg:
+    repeating-linear-gradient(75deg,
+      rgba(0,0,0,0.05) 0px, rgba(0,0,0,0) 4px,
+      rgba(255,255,255,0.10) 6px, rgba(0,0,0,0) 10px),
+    linear-gradient(180deg, #F0D898 0%, #D8B860 42%, #B8902E 78%, #7A5A14 100%);
+  --plate-border: #4A3408;
+  --plate-fg: #FFF8DC;
+  --plate-text-shadow: 0 2px 0 #4A3408, 0 0 8px rgba(255,220,140,0.55);
+  --plate-hi: rgba(255,245,200,0.65);
+  --plate-lo: rgba(0,0,0,0.4);
+  --plate-drop: #362400;
+  --plate-shadow: rgba(60,40,0,0.45);
+}
+
+/* ============================================================
+   TOPBAR DO JOGO
+   ============================================================ */
+#telaJogo .topbar{
+  padding: 8px 10px;
+}
+#telaJogo .topbar h2{
+  color: inherit;
+  text-shadow: inherit;
   font-size: clamp(14px, 4vw, 18px);
   letter-spacing: .5px;
 }
-/* folhinhas nos cantos superiores */
 #telaJogo .topbar::before,
-#telaJogo .topbar::after {
+#telaJogo .topbar::after{
   content: '🌿';
   position: absolute;
   top: -14px;
@@ -122,20 +234,20 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 #telaJogo .topbar::before { left: 6px; }
 #telaJogo .topbar::after  { right: 6px; transform: rotate(20deg) scaleX(-1); }
 
-/* botões dentro da placa ficam madeira-friendly */
-#telaJogo .topbar .icon-btn {
-  background: rgba(255,245,214,0.18);
-  color: #FFF5D6;
-  border: 1px solid rgba(0,0,0,0.35);
-  box-shadow: 0 3px 0 rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,220,160,0.35);
+#telaJogo .topbar .icon-btn{
+  background: rgba(255,255,255,0.22);
+  color: inherit;
+  border: 1px solid rgba(0,0,0,0.3);
+  box-shadow: 0 3px 0 rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.4);
+  text-shadow: inherit;
 }
-#telaJogo .topbar .icon-btn:active {
+#telaJogo .topbar .icon-btn:active{
   transform: translateY(2px);
   box-shadow: 0 1px 0 rgba(0,0,0,0.35);
 }
 
 /* ============================================================
-   PIPS — barra de madeira com patinhas douradas
+   PIPS
    ============================================================ */
 .pips{
   display:flex;
@@ -147,24 +259,13 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   border-radius:14px;
   font-size:20px;
   flex:0 0 auto;
-  background:
-    repeating-linear-gradient(180deg,
-      rgba(0,0,0,0) 0px, rgba(0,0,0,.06) 1px,
-      rgba(0,0,0,0) 3px, rgba(255,220,160,.08) 4px,
-      rgba(0,0,0,0) 7px),
-    linear-gradient(180deg, #9A6A38 0%, #7A4A20 55%, #4A2C14 100%);
-  border: 3px solid #3A2010;
-  box-shadow:
-    inset 0 2px 0 rgba(255,220,160,0.4),
-    inset 0 -3px 0 rgba(0,0,0,0.4),
-    0 4px 0 #2E1808,
-    0 6px 12px rgba(0,0,0,0.35);
-  max-width: 100%;
+  max-width:100%;
 }
 .pip{
   opacity:1;
   filter: brightness(0.28) saturate(0.3);
   transition: filter .35s, transform .35s;
+  text-shadow: none;
 }
 .pip.done{
   filter:
@@ -185,9 +286,6 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 #decor{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .decor-item{position:absolute;transform:translate(-50%,-50%);opacity:.55;line-height:1;filter:drop-shadow(0 3px 6px #00000022);user-select:none;}
 
-/* ============================================================
-   ALVO — glow amarelo pulsante atrás do bicho
-   ============================================================ */
 .target{
   position:absolute;
   left:50%;
@@ -216,53 +314,6 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 #bodyWrap{position:absolute;left:50%;top:52%;width:46%;transform:translate(-50%,-50%);pointer-events:none;transition:opacity .3s;z-index:2;}
 #bodyWrap svg,#bodyWrap img{width:100%;height:auto;display:block;}
 
-/* ============================================================
-   BOTÕES LATERAIS — madeira circular
-   ============================================================ */
-#botoesLaterais{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  z-index:1;
-}
-.btn-lateral{
-  position:absolute;
-  top:52%;
-  width:calc(var(--hs) * 0.85);
-  height:calc(var(--hs) * 0.85);
-  transform:translateY(-50%);
-  border-radius:50%;
-  padding:0;
-  font-size:calc(var(--hs) * 0.45);
-  line-height:1;
-  pointer-events:auto;
-  background:
-    radial-gradient(circle at 32% 26%,
-      rgba(255,220,160,0.55) 0%,
-      rgba(255,220,160,0) 45%),
-    linear-gradient(180deg, #B07E44 0%, #8B5A2B 55%, #5A3416 100%);
-  border:3px solid #3A2010;
-  box-shadow:
-    inset 0 3px 0 rgba(255,220,160,0.4),
-    inset 0 -4px 0 rgba(0,0,0,0.45),
-    0 5px 0 #2E1808,
-    0 8px 14px rgba(0,0,0,0.4);
-  color:#FFF5D6;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:transform .1s, box-shadow .1s;
-}
-.btn-lateral:active{
-  transform:translateY(calc(-50% + 3px));
-  box-shadow:
-    inset 0 3px 0 rgba(255,220,160,0.4),
-    inset 0 -4px 0 rgba(0,0,0,0.45),
-    0 2px 0 #2E1808;
-}
-.btn-lateral:nth-child(1){ left:3%;  }
-.btn-lateral:nth-child(2){ right:3%; }
-
 #heads{position:absolute;inset:0;pointer-events:none;z-index:5;}
 .head{position:absolute;width:var(--hs);height:var(--hs);transform:translate(-50%,-50%) translate(var(--dx,0),var(--dy,0)) scale(var(--s,1));transition:transform .35s cubic-bezier(.34,1.56,.64,1), opacity .3s;cursor:grab;touch-action:none;will-change:transform;pointer-events:auto;}
 .head.dragging{cursor:grabbing;z-index:25;transition:none;}
@@ -274,9 +325,6 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 .head-inner.shake{animation:tremer .5s;}
 @keyframes tremer{0%,100%{transform:translateX(0) rotate(0);}20%{transform:translateX(-9px) rotate(-7deg);}50%{transform:translateX(9px) rotate(7deg);}80%{transform:translateX(-5px) rotate(-3deg);}}
 
-/* ============================================================
-   NOME DO BICHO — placa de madeira
-   ============================================================ */
 #nomeLabel{
   position:absolute;
   left:50%;
@@ -292,22 +340,6 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   opacity:0;
   pointer-events:none;
   z-index:40;
-
-  background:
-    repeating-linear-gradient(180deg,
-      rgba(0,0,0,0) 0px, rgba(0,0,0,.06) 1px,
-      rgba(0,0,0,0) 3px, rgba(255,220,160,.08) 4px,
-      rgba(0,0,0,0) 7px),
-    linear-gradient(180deg, #B07E44 0%, #8B5A2B 42%, #6B4220 78%, #4A2C14 100%);
-  border:3px solid #3A2010;
-  box-shadow:
-    inset 0 3px 0 rgba(255,220,160,0.45),
-    inset 0 -4px 0 rgba(0,0,0,0.4),
-    0 6px 0 #2E1808,
-    0 10px 22px rgba(0,0,0,0.45);
-  color:#FFF5D6;
-  text-shadow:0 2px 0 #2A1808, 0 0 10px rgba(255,200,120,0.45);
-
   transition:opacity .28s, transform .38s cubic-bezier(.34,1.56,.64,1);
 }
 #nomeLabel.show{opacity:1;transform:translate(-50%,-50%) scale(1);animation:balanca .5s ease-in-out .38s;}
