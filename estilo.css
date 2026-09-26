@@ -362,6 +362,24 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   50%     { transform: translate(-50%,-50%) scale(1.10); opacity:1;   }
 }
 
+/* ============================================================
+   BASE (plataforma embaixo do bicho)
+   ============================================================ */
+#baseWrap{
+  position:absolute;
+  left:50%;
+  top:74%;
+  width:62%;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+  z-index:2;
+  transition:opacity .3s;
+}
+#baseWrap svg,#baseWrap img{width:100%;height:auto;display:block;}
+
+/* ============================================================
+   CORPO
+   ============================================================ */
 #bodyWrap{
   position:absolute;
   left:50%;
@@ -370,21 +388,84 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   transform:translate(-50%,-50%);
   pointer-events:none;
   transition:opacity .3s;
-  z-index:2;
+  z-index:3;
 }
 #bodyWrap svg,#bodyWrap img{width:100%;height:auto;display:block;}
 
+/* ============================================================
+   CABEÇAS (círculo em vidro fosco transparente)
+   ============================================================ */
 #heads{position:absolute;inset:0;pointer-events:none;z-index:5;}
-.head{position:absolute;width:var(--hs);height:var(--hs);transform:translate(-50%,-50%) translate(var(--dx,0),var(--dy,0)) scale(var(--s,1));transition:transform .35s cubic-bezier(.34,1.56,.64,1), opacity .3s;cursor:grab;touch-action:none;will-change:transform;pointer-events:auto;}
+.head{
+  position:absolute;
+  width:var(--hs);
+  height:var(--hs);
+  transform:translate(-50%,-50%) translate(var(--dx,0),var(--dy,0)) scale(var(--s,1));
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1), opacity .3s;
+  cursor:grab;
+  touch-action:none;
+  will-change:transform;
+  pointer-events:auto;
+}
 .head.dragging{cursor:grabbing;z-index:25;transition:none;}
 .head.esconder{opacity:0;transform:translate(-50%,-50%) scale(.4);}
-.head-inner{width:100%;height:100%;border-radius:50%;background:radial-gradient(circle at 34% 28%, #ffffff, #ffefc9 72%);box-shadow:0 6px 0 #e8cc8f, 0 10px 18px #00000024, inset 0 -4px 10px #00000012;display:flex;align-items:center;justify-content:center;font-size:calc(var(--hs) * .6);line-height:1;pointer-events:none;-webkit-user-drag:none;overflow:hidden;transition:background .25s, box-shadow .25s;}
-.head-inner img{width:82%;height:82%;object-fit:contain;-webkit-user-drag:none;transition:transform .25s;}
-.head-inner.encaixada{background:transparent;box-shadow:none;}
-.head-inner.encaixada img{width:100%;height:100%;transform:scale(1.05);}
-.head-inner.shake{animation:tremer .5s;}
-@keyframes tremer{0%,100%{transform:translateX(0) rotate(0);}20%{transform:translateX(-9px) rotate(-7deg);}50%{transform:translateX(9px) rotate(7deg);}80%{transform:translateX(-5px) rotate(-3deg);}}
 
+.head-inner{
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  background: radial-gradient(circle at 34% 28%,
+    rgba(255,255,255,0.55) 0%,
+    rgba(255,240,200,0.28) 60%,
+    rgba(255,220,140,0.12) 100%);
+  border: 2px solid rgba(255,255,255,0.60);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  box-shadow:
+    0 4px 0 rgba(180,150,90,0.35),
+    0 8px 16px rgba(0,0,0,0.20),
+    inset 0 -4px 10px rgba(255,255,255,0.20),
+    inset 0 2px 4px rgba(255,255,255,0.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:calc(var(--hs) * .6);
+  line-height:1;
+  pointer-events:none;
+  -webkit-user-drag:none;
+  overflow:hidden;
+  transition:background .25s, box-shadow .25s, border-color .25s;
+}
+
+.head-inner img{
+  width:82%;
+  height:82%;
+  object-fit:contain;
+  -webkit-user-drag:none;
+  transition:transform .25s;
+  transform: scale(var(--zoom, 1.15));
+}
+
+.head-inner.encaixada{
+  background:transparent;
+  box-shadow:none;
+  border-color:transparent;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+}
+.head-inner.encaixada img{width:100%;height:100%;transform:scale(1.05);}
+
+.head-inner.shake{animation:tremer .5s;}
+@keyframes tremer{
+  0%,100%{transform:translateX(0) rotate(0);}
+  20%{transform:translateX(-9px) rotate(-7deg);}
+  50%{transform:translateX(9px) rotate(7deg);}
+  80%{transform:translateX(-5px) rotate(-3deg);}
+}
+
+/* ============================================================
+   NOME
+   ============================================================ */
 #nomeLabel{
   position:absolute;
   left:50%;
@@ -482,7 +563,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   font-size:min(20vw,120px);
   position:relative;
 }
-#criaHead.encaixada .head-inner{background:transparent;box-shadow:none;}
+#criaHead.encaixada .head-inner{background:transparent;box-shadow:none;border-color:transparent;}
 #criaHead.encaixada .head-inner img{width:100%;height:100%;}
 #criaHead .emoji-cabeca{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:min(20vw,120px);line-height:1;}
 
