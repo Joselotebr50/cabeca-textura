@@ -99,7 +99,7 @@ const POSICOES = {
   4: [{ x:16.2, y:37.5 }, { x:83.8, y:37.5 }, { x:12.0, y:54.7 }, { x:88.0, y:54.7 }],
   5: [{ x:16.2, y:37.5 }, { x:83.8, y:37.5 }, { x:12.0, y:54.7 }, { x:88.0, y:54.7 }, { x:50.0, y:70.3 }]
 };
-const ALVO = { x:50, y:41.9 };
+const ALVO = { x:50, y:43.2 };
 
 const STORAGE_PERFIS = 'cabecaAnimais.perfis.v2';
 const STORAGE_ANTIGO = 'cabecaAnimais.progresso.v1';
@@ -601,7 +601,6 @@ function iniciarRodada(){
   overlay.innerHTML = '';
   bodyWrap.classList.remove('acenando');
 
-  /* texto inicial */
   nomeLabel.innerHTML = '🐾 ESCOLHA UM ANIMAL 🐾';
   nomeLabel.classList.remove('show');
   void nomeLabel.offsetWidth;
@@ -694,7 +693,7 @@ function ligarArraste(el, animal){
     const cx = r.left + r.width/2  - sr.left;
     const cy = r.top  + r.height/2 - sr.top;
     const alvoX = sr.width  * 0.5;
-    const alvoY = sr.height * 0.419;
+    const alvoY = sr.height * 0.432;
     if (Math.hypot(cx-alvoX, cy-alvoY) < sr.width * 0.32) escolher(el, animal);
     else voltarAoLugar(el);
   }
