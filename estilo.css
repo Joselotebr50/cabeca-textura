@@ -200,7 +200,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 }
 
 /* ============================================================
-   TELA DE JOGO — stage ocupa a TELA TODA
+   TELA DE JOGO
    ============================================================ */
 #telaJogo{padding:0;gap:0;display:block;}
 
@@ -223,24 +223,25 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 #decor{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .decor-item{position:absolute;transform:translate(-50%,-50%);opacity:.55;line-height:1;filter:drop-shadow(0 3px 6px #00000022);user-select:none;}
 
+/* TOPBAR (+20%) */
 #topbarJogo{
   position:absolute;
   left:50%;
   top:9.6%;
   transform:translate(-50%,-50%);
-  width:62%;
-  max-width:360px;
-  padding:6px 8px;
+  width:68%;
+  max-width:420px;
+  padding:8px 12px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:6px;
+  gap:8px;
   z-index:50;
 }
 #topbarJogo h2{
   color:inherit;
   text-shadow:inherit;
-  font-size:clamp(12px,3.5vw,16px);
+  font-size:clamp(14px,4.2vw,19px);
   letter-spacing:1px;
   font-weight:800;
   margin:0;
@@ -251,9 +252,9 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   text-overflow:ellipsis;
 }
 #topbarJogo .icon-btn{
-  padding:5px 9px;
-  font-size:14px;
-  min-width:30px;
+  padding:6px 11px;
+  font-size:17px;
+  min-width:36px;
   background: rgba(255,255,255,0.22);
   color: inherit;
   border: 1px solid rgba(0,0,0,0.3);
@@ -265,18 +266,19 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   box-shadow: 0 1px 0 rgba(0,0,0,0.35);
 }
 
+/* PIPS (+20%) */
 .pips{
   position:absolute;
   left:50%;
-  top:14.2%;
+  top:14.8%;
   transform:translate(-50%,-50%);
   display:flex;
   justify-content:center;
   align-items:center;
-  gap:5px;
-  padding:6px 16px;
+  gap:6px;
+  padding:8px 19px;
   border-radius:12px;
-  font-size:17px;
+  font-size:20px;
   z-index:50;
 }
 .pip{
@@ -293,13 +295,14 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   transform: scale(1.15);
 }
 
+/* HUD (+20%) */
 #hudJogo{
   position:absolute;
   left:0;
   right:0;
-  top:19.8%;
+  top:22.5%;
   transform:translateY(-50%);
-  padding:0 4%;
+  padding:0 3%;
   display:flex;
   justify-content:space-between;
   gap:10px;
@@ -310,13 +313,13 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:6px;
-  padding:5px 14px;
-  min-width:88px;
-  font-size:clamp(14px,4vw,18px);
+  gap:7px;
+  padding:6px 17px;
+  min-width:106px;
+  font-size:clamp(17px,4.8vw,22px);
   font-weight:800;
   letter-spacing:.5px;
-  border-radius:12px;
+  border-radius:14px;
   transition: transform .1s;
   pointer-events:auto;
 }
@@ -338,10 +341,11 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   100% { transform: scale(1);    filter: brightness(1);   }
 }
 
+/* ALVO */
 .target{
   position:absolute;
   left:50%;
-  top:41.9%;
+  top:43.2%;
   width:calc(var(--hs) * 2.6);
   height:calc(var(--hs) * 2.6);
   border-radius:50%;
@@ -362,13 +366,11 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   50%     { transform: translate(-50%,-50%) scale(1.10); opacity:1;   }
 }
 
-/* ============================================================
-   BASE (plataforma embaixo do bicho)
-   ============================================================ */
+/* BASE (subiu) */
 #baseWrap{
   position:absolute;
   left:50%;
-  top:74%;
+  top:70%;
   width:62%;
   transform:translate(-50%,-50%);
   pointer-events:none;
@@ -377,13 +379,11 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 }
 #baseWrap svg,#baseWrap img{width:100%;height:auto;display:block;}
 
-/* ============================================================
-   CORPO
-   ============================================================ */
+/* CORPO (desceu) */
 #bodyWrap{
   position:absolute;
   left:50%;
-  top:53.6%;
+  top:55%;
   width:42%;
   transform:translate(-50%,-50%);
   pointer-events:none;
@@ -392,9 +392,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 }
 #bodyWrap svg,#bodyWrap img{width:100%;height:auto;display:block;}
 
-/* ============================================================
-   CABEÇAS (círculo em vidro fosco transparente)
-   ============================================================ */
+/* CABEÇAS */
 #heads{position:absolute;inset:0;pointer-events:none;z-index:5;}
 .head{
   position:absolute;
@@ -436,7 +434,6 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   overflow:hidden;
   transition:background .25s, box-shadow .25s, border-color .25s;
 }
-
 .head-inner img{
   width:82%;
   height:82%;
@@ -445,7 +442,6 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   transition:transform .25s;
   transform: scale(var(--zoom, 1.15));
 }
-
 .head-inner.encaixada{
   background:transparent;
   box-shadow:none;
@@ -463,18 +459,16 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   80%{transform:translateX(-5px) rotate(-3deg);}
 }
 
-/* ============================================================
-   NOME
-   ============================================================ */
+/* NOME (+20%) */
 #nomeLabel{
   position:absolute;
   left:50%;
-  top:81%;
+  top:83%;
   transform:translate(-50%,-50%) scale(.4);
-  padding:8px 26px 10px;
-  border-radius:14px;
+  padding:10px 31px 12px;
+  border-radius:16px;
   font-weight:800;
-  font-size:clamp(14px,4.5vw,20px);
+  font-size:clamp(17px,5.4vw,24px);
   letter-spacing:2px;
   text-transform:uppercase;
   white-space:nowrap;
