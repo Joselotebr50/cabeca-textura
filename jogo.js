@@ -1,5 +1,5 @@
 /* ============================================================
-   jogo.js — Lote 3: novos animais + cria seu bicho
+   jogo.js
    ============================================================ */
 
 const ANIMAIS = {
@@ -39,14 +39,14 @@ const BICHOS_BR = ['onca','arara','preguiça','jacare'];
 const BICHOS_FANTASTICOS = ['trex','bronto','dragao','unicornio'];
 
 const TEMAS = {
-  casa:    { fundo:'linear-gradient(180deg,#c8e8ff 0%,#e0f0ff 42%,#d8f0b8 100%)', decor:[] },
-  fazenda: { fundo:'linear-gradient(180deg,#bfe6ff 0%,#e0f0c8 42%,#b8e090 100%)', decor:[] },
-  selva:   { fundo:'linear-gradient(180deg,#3a7a30 0%,#6aa85a 45%,#88c878 100%)', decor:[] },
-  agua:    { fundo:'linear-gradient(180deg,#bce8ff 0%,#7ec8e8 45%,#3a90c0 100%)', decor:[] },
-  rainbow: { fundo:'linear-gradient(180deg,#ffd0e8 0%,#fff0a8 45%,#d0e8ff 100%)', decor:[] },
-  trofeu:  { fundo:'linear-gradient(180deg,#ffe9a8 0%,#ffd060 50%,#e8a020 100%)', decor:[] },
-  brasil:  { fundo:'linear-gradient(180deg,#4aa848 0%,#88c070 45%,#e8d060 100%)', decor:[] },
-  fantasia:{ fundo:'linear-gradient(180deg,#5a3080 0%,#9050c0 45%,#e0a0e8 100%)', decor:[] }
+  casa:    { fundo:'linear-gradient(180deg,#c8e8ff 0%,#e0f0ff 42%,#d8f0b8 100%)' },
+  fazenda: { fundo:'linear-gradient(180deg,#bfe6ff 0%,#e0f0c8 42%,#b8e090 100%)' },
+  selva:   { fundo:'linear-gradient(180deg,#3a7a30 0%,#6aa85a 45%,#88c878 100%)' },
+  agua:    { fundo:'linear-gradient(180deg,#bce8ff 0%,#7ec8e8 45%,#3a90c0 100%)' },
+  rainbow: { fundo:'linear-gradient(180deg,#ffd0e8 0%,#fff0a8 45%,#d0e8ff 100%)' },
+  trofeu:  { fundo:'linear-gradient(180deg,#ffe9a8 0%,#ffd060 50%,#e8a020 100%)' },
+  brasil:  { fundo:'linear-gradient(180deg,#4aa848 0%,#88c070 45%,#e8d060 100%)' },
+  fantasia:{ fundo:'linear-gradient(180deg,#5a3080 0%,#9050c0 45%,#e0a0e8 100%)' }
 };
 
 const CONFETE_TEMA = {
@@ -171,6 +171,7 @@ const jogoTitulo = document.getElementById('jogoTitulo');
 const stage      = document.getElementById('stage');
 const decor      = document.getElementById('decor');
 const headsEl    = document.getElementById('heads');
+const baseWrap   = document.getElementById('baseWrap');
 const bodyWrap   = document.getElementById('bodyWrap');
 const toastEl    = document.getElementById('toast');
 const nomeLabel  = document.getElementById('nomeLabel');
@@ -209,6 +210,8 @@ function tentarBloquearRotacao(){
 }
 function preloadFase(){
   if (!faseAtual) return;
+  const v = faseAtual.config.visual;
+  new Image().src = `imagens/base_${v}.png`;
   faseAtual.config.animais.forEach(id => {
     new Image().src = `imagens/${id}_corpo.png`;
     new Image().src = `imagens/${id}_cabeca.png`;
@@ -218,6 +221,8 @@ function preloadProximaFase(){
   const proxima = faseAtual ? faseAtual.index + 1 : 0;
   if (!FASES[proxima]) return;
   setTimeout(() => {
+    const v = FASES[proxima].visual;
+    new Image().src = `imagens/base_${v}.png`;
     FASES[proxima].animais.forEach(id => {
       new Image().src = `imagens/${id}_corpo.png`;
       new Image().src = `imagens/${id}_cabeca.png`;
@@ -349,6 +354,28 @@ function bodyDragao(a){
     <ellipse cx="60" cy="70" rx="28" ry="18" fill="${a.claro}" opacity=".5"/>
     <path d="M38 44 q5 -8 10 0 q5 -8 10 0 q5 -8 10 0" fill="none" stroke="${a.escuro}" stroke-width="3" stroke-linecap="round" opacity=".6"/>
     <ellipse cx="60" cy="30" rx="17" ry="11" fill="${a.cor}" stroke="${a.escuro}" stroke-opacity=".35" stroke-width="3"/>
+  </svg>`;
+}
+
+/* ---------- SVG DA BASE (fallback) ---------- */
+function baseSVG(visual){
+  const cores = {
+    casa:     { a:'#8B7A66', b:'#A89478', c:'#B8A488' },
+    fazenda:  { a:'#C8A050', b:'#D8B860', c:'#E8D080' },
+    selva:    { a:'#6A5A3A', b:'#8A7A4A', c:'#A8A070' },
+    agua:     { a:'#4A7A98', b:'#6A9AB8', c:'#8ABAD8' },
+    rainbow:  { a:'#D8C8E8', b:'#E8D8F0', c:'#F8E8F8' },
+    trofeu:   { a:'#C8922A', b:'#F5C23A', c:'#FFE888' },
+    brasil:   { a:'#5A4A2A', b:'#7A6A3A', c:'#9A8A5A' },
+    fantasia: { a:'#6A3A88', b:'#9050C0', c:'#B878D8' }
+  };
+  const c = cores[visual] || cores.casa;
+  return `<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <ellipse cx="200" cy="170" rx="180" ry="22" fill="#000" opacity=".18"/>
+    <ellipse cx="200" cy="150" rx="175" ry="42" fill="${c.a}"/>
+    <ellipse cx="200" cy="138" rx="165" ry="38" fill="${c.b}"/>
+    <ellipse cx="200" cy="130" rx="150" ry="30" fill="${c.c}" opacity=".85"/>
+    <ellipse cx="200" cy="124" rx="120" ry="18" fill="#FFFFFF" opacity=".18"/>
   </svg>`;
 }
 
@@ -518,6 +545,18 @@ function salvarNovoPerfil(){
   mostrarToast(`Olá, ${nome}!`);
 }
 
+/* ---------- BASE ---------- */
+function carregarBase(visual){
+  if (!baseWrap) return;
+  baseWrap.innerHTML = '';
+  const imgB = new Image();
+  imgB.alt = ''; imgB.draggable = false;
+  imgB.onload = () => { baseWrap.innerHTML = ''; baseWrap.appendChild(imgB); };
+  imgB.onerror = () => { baseWrap.innerHTML = baseSVG(visual); };
+  imgB.src = `imagens/base_${visual}.png`;
+}
+
+/* ---------- ABRIR FASE ---------- */
 function abrirFase(numero){
   const i = Math.max(0, Math.min(FASES.length-1, numero-1));
   faseAtual = { index: i, config: FASES[i] };
@@ -533,6 +572,7 @@ function abrirFase(numero){
   mostrarTela('jogo');
   aplicarMaterial(MATERIAL_POR_VISUAL[faseAtual.config.visual] || MATERIAL_PADRAO);
   aplicarTema(faseAtual.config.visual);
+  carregarBase(faseAtual.config.visual);
   atualizarHUD();
   requestAnimationFrame(() => {
     ajustarUnidade();
@@ -557,10 +597,15 @@ function iniciarRodada(){
   travado = false;
   headsEl.innerHTML = '';
   toastEl.classList.remove('show');
-  nomeLabel.classList.remove('show');
   overlay.classList.add('hidden');
   overlay.innerHTML = '';
   bodyWrap.classList.remove('acenando');
+
+  /* texto inicial */
+  nomeLabel.innerHTML = '🐾 ESCOLHA UM ANIMAL 🐾';
+  nomeLabel.classList.remove('show');
+  void nomeLabel.offsetWidth;
+  nomeLabel.classList.add('show');
 
   const lista = faseAtual.config.animais;
   const pool = lista.filter(id => id !== ultimoId);
@@ -591,6 +636,7 @@ function iniciarRodada(){
     el.style.left = posicoes[i].x + '%';
     el.style.top  = posicoes[i].y + '%';
     el.style.setProperty('--s','0');
+    el.style.setProperty('--zoom', (animal.zoom || 1.15));
     el.style.opacity = '0';
 
     const inner = document.createElement('div');
