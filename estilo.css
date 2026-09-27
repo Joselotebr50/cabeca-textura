@@ -160,7 +160,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   box-shadow: 0 1px 0 rgba(0,0,0,0.35);
 }
 
-/* ---------- PIPS (1em 1em + gap 0.45em) ---------- */
+/* ---------- PIPS (altura reduzida) ---------- */
 .pips{
   position:absolute;
   left:50%;
@@ -170,7 +170,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   justify-content:center;
   align-items:center;
   gap:0.45em;
-  padding:1em 1em;
+  padding:0.3em 1em;
   font-size:24px;
   z-index:50;
   --borda: 12px;
@@ -189,7 +189,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   transform: scale(1.15);
 }
 
-/* ---------- HUD (0.5em 1.5em + gap 0.4em) ---------- */
+/* ---------- HUD (altura reduzida) ---------- */
 #hudJogo{
   position:absolute;
   left:0;
@@ -208,7 +208,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   align-items:center;
   justify-content:center;
   gap:0.4em;
-  padding:0.5em 1.5em;
+  padding:0.2em 1.5em;
   min-width:100px;
   font-size:clamp(16px,4.8vw,22px);
   font-weight:800;
