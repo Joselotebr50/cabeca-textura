@@ -253,16 +253,38 @@ function preloadProximaFase(){
 }
 
 /* ============================================================
-   ENCAIXE DINÂMICO
+   ENCAIXE DINÂMICO — cálculo matemático (sem medir layout)
+   ------------------------------------------------------------
+   Usa a proporção natural da imagem. Não depende de timing,
+   então funciona IGUAL em qualquer navegador.
    ============================================================ */
 function calcularSnapY(){
   const img = bodyWrap ? bodyWrap.querySelector('img') : null;
-  if (!img) return ALVO.y;
-  const ir = img.getBoundingClientRect();
+  if (!img || !img.naturalWidth || !img.naturalHeight) return ALVO.y;
   const sr = stage.getBoundingClientRect();
   if (sr.height === 0) return ALVO.y;
-  const topoPct = ((ir.top - sr.top) / sr.height) * 100;
+
+  /* 1. Largura visual do corpo em px (42% do stage) */
+  const larguraVisualPx = sr.width * 0.42;
+
+  /* 2. Altura visual = largura × proporção natural da imagem */
+  const alturaVisualPx = larguraVisualPx * (img.naturalHeight / img.naturalWidth);
+
+  /* 3. Aplica a escala do bicho */
   const aj = atual ? ajusteDe(atual.id) : {};
+  const escala = aj.escala || 1;
+  const alturaEscaladaPx = alturaVisualPx * escala;
+
+  /* 4. Centro do corpo está em 55% do stage (mesmo do CSS) */
+  const centroYPx = sr.height * 0.55;
+
+  /* 5. Topo = centro - metade da altura */
+  const topoPx = centroYPx - alturaEscaladaPx / 2;
+
+  /* 6. Converte pra % */
+  const topoPct = (topoPx / sr.height) * 100;
+
+  /* 7. Ajuste fino opcional por bicho */
   const offset = typeof aj.ajusteY === 'number' ? aj.ajusteY : 0;
   return topoPct + offset;
 }
@@ -665,11 +687,11 @@ function iniciarRodada(){
   imgCorpo.onload = () => {
     bodyWrap.innerHTML = '';
     bodyWrap.appendChild(imgCorpo);
-    requestAnimationFrame(() => aplicarSnapY());
+    aplicarSnapY();
   };
   imgCorpo.onerror = () => {
     bodyWrap.innerHTML = bodySVG(atual);
-    requestAnimationFrame(() => aplicarSnapY());
+    aplicarSnapY();
   };
   imgCorpo.src = `imagens/${atual.id}_corpo.png`;
 
@@ -1086,9 +1108,6 @@ if (btnTC) btnTC.addEventListener('click', alternarTelaCheia);
 
 /* ============================================================
    PRÉ-CARREGAMENTO EM BACKGROUND
-   ------------------------------------------------------------
-   Baixa todas as bases, placas, fundos e bichos em segundo plano
-   assim que o app abre. Não trava nada — roda escondido.
    ============================================================ */
 function preloadTudo(){
   const temas = ['casa','fazenda','selva','agua','rainbow','trofeu','brasil','fantasia'];
@@ -1107,7 +1126,6 @@ function preloadTudo(){
   });
 }
 
-/* espera 2 segundos pra não competir com o carregamento do menu */
 setTimeout(preloadTudo, 2000);
 
 carregarPerfis();
