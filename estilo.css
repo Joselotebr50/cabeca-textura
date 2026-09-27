@@ -115,7 +115,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 #decor{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .decor-item{position:absolute;transform:translate(-50%,-50%);opacity:.55;line-height:1;filter:drop-shadow(0 3px 6px #00000022);user-select:none;}
 
-/* ---------- TOPBAR (padding em em = escala com a fonte) ---------- */
+/* ---------- TOPBAR (padding maior) ---------- */
 #topbarJogo{
   position:absolute;
   left:50%;
@@ -123,7 +123,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   transform:translate(-50%,-50%);
   width:88%;
   max-width:520px;
-  padding:0.6em 1.6em;
+  padding:1em 2.4em;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -160,7 +160,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   box-shadow: 0 1px 0 rgba(0,0,0,0.35);
 }
 
-/* ---------- PIPS ---------- */
+/* ---------- PIPS (padding maior) ---------- */
 .pips{
   position:absolute;
   left:50%;
@@ -169,8 +169,8 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   display:flex;
   justify-content:center;
   align-items:center;
-  gap:0.3em;
-  padding:0.5em 1.4em;
+  gap:0.45em;
+  padding:0.8em 2em;
   font-size:24px;
   z-index:50;
   --borda: 12px;
@@ -189,7 +189,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   transform: scale(1.15);
 }
 
-/* ---------- HUD ---------- */
+/* ---------- HUD (padding maior) ---------- */
 #hudJogo{
   position:absolute;
   left:0;
@@ -207,8 +207,8 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:0.4em;
-  padding:0.5em 1.5em;
+  gap:0.6em;
+  padding:0.8em 2.2em;
   min-width:100px;
   font-size:clamp(16px,4.8vw,22px);
   font-weight:800;
@@ -353,13 +353,13 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   80%{transform:translateX(-5px) rotate(-3deg);}
 }
 
-/* ---------- NOME (padding em em) ---------- */
+/* ---------- NOME (padding maior) ---------- */
 #nomeLabel{
   position:absolute;
   left:50%;
   top:83%;
   transform:translate(-50%,-50%) scale(.4);
-  padding:0.6em 2em 0.7em;
+  padding:1em 3em 1.1em;
   font-weight:800;
   font-size:clamp(17px,5.2vw,24px);
   letter-spacing:2px;
