@@ -73,24 +73,14 @@ const FASES = [
   { tema:'Fantástico',     visual:'fantasia', emoji:'🦄', animais: BICHOS_FANTASTICOS,                                               opcoes:4, acertos:5 }
 ];
 
-const MATERIAL_POR_VISUAL = {
-  casa:     'madeira',
-  fazenda:  'palha',
-  selva:    'folha',
-  agua:     'gelo',
-  rainbow:  'nuvem',
-  trofeu:   'ouro',
-  brasil:   'madeira',
-  fantasia: 'cristal'
-};
-const MATERIAL_PADRAO = 'madeira';
-const MATERIAIS = ['madeira','gelo','folha','agua','nuvem','ouro','cristal','palha'];
-
-function aplicarMaterial(material){
-  const cls = 'placa-' + material;
+/* ============================================================
+   PLACAS — troca o border-image-source pelo tema da fase
+   As imagens estão em placas/{visual}.png (9-slice)
+   ============================================================ */
+function aplicarPlaca(visual){
+  const src = `url('placas/${visual}.png')`;
   document.querySelectorAll('.placa').forEach(el => {
-    MATERIAIS.forEach(m => el.classList.remove('placa-' + m));
-    el.classList.add(cls);
+    el.style.borderImageSource = src;
   });
 }
 
@@ -212,6 +202,7 @@ function preloadFase(){
   if (!faseAtual) return;
   const v = faseAtual.config.visual;
   new Image().src = `imagens/base_${v}.png`;
+  new Image().src = `placas/${v}.png`;
   faseAtual.config.animais.forEach(id => {
     new Image().src = `imagens/${id}_corpo.png`;
     new Image().src = `imagens/${id}_cabeca.png`;
@@ -223,6 +214,7 @@ function preloadProximaFase(){
   setTimeout(() => {
     const v = FASES[proxima].visual;
     new Image().src = `imagens/base_${v}.png`;
+    new Image().src = `placas/${v}.png`;
     FASES[proxima].animais.forEach(id => {
       new Image().src = `imagens/${id}_corpo.png`;
       new Image().src = `imagens/${id}_cabeca.png`;
@@ -570,7 +562,7 @@ function abrirFase(numero){
   overlay.classList.add('hidden');
   overlay.innerHTML = '';
   mostrarTela('jogo');
-  aplicarMaterial(MATERIAL_POR_VISUAL[faseAtual.config.visual] || MATERIAL_PADRAO);
+  aplicarPlaca(faseAtual.config.visual);
   aplicarTema(faseAtual.config.visual);
   carregarBase(faseAtual.config.visual);
   atualizarHUD();
