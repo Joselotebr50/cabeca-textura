@@ -160,7 +160,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   box-shadow: 0 1px 0 rgba(0,0,0,0.35);
 }
 
-/* ---------- PIPS (altura reduzida) ---------- */
+/* ---------- PIPS ---------- */
 .pips{
   position:absolute;
   left:50%;
@@ -189,7 +189,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   transform: scale(1.15);
 }
 
-/* ---------- HUD (altura reduzida) ---------- */
+/* ---------- HUD ---------- */
 #hudJogo{
   position:absolute;
   left:0;
@@ -239,7 +239,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 .target{
   position:absolute;
   left:50%;
-  top:43.2%;
+  top:var(--snap-y, 43.2%);
   width:calc(var(--hs) * 2.6);
   height:calc(var(--hs) * 2.6);
   border-radius:50%;
@@ -254,6 +254,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   animation: alvoGlow 2.2s ease-in-out infinite;
   pointer-events:none;
   z-index:1;
+  transition: top .25s;
 }
 @keyframes alvoGlow{
   0%,100% { transform: translate(-50%,-50%) scale(1);    opacity:.85; }
@@ -279,9 +280,9 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   left:50%;
   top:55%;
   width:42%;
-  transform:translate(-50%,-50%);
+  transform:translate(-50%,-50%) scale(var(--body-scale, 1));
   pointer-events:none;
-  transition:opacity .3s;
+  transition:opacity .3s, transform .25s;
   z-index:3;
 }
 #bodyWrap svg,#bodyWrap img{width:100%;height:auto;display:block;}

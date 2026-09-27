@@ -74,14 +74,43 @@ const FASES = [
 ];
 
 /* ============================================================
-   PLACAS — troca o border-image-source pelo tema da fase
-   As imagens estão em placas/{visual}.png (9-slice)
+   PLACA — troca o border-image-source pelo tema da fase
    ============================================================ */
 function aplicarPlaca(visual){
   const src = `url('placas/${visual}.png')`;
   document.querySelectorAll('.placa').forEach(el => {
     el.style.borderImageSource = src;
   });
+}
+
+/* ============================================================
+   AJUSTES FINOS POR BICHO
+   ------------------------------------------------------------
+   escala  = tamanho do CORPO   (1 = normal)
+   cabeca  = tamanho da CABEÇA  (1.15 = padrão)
+   encaixe = onde a cabeça cai no acerto (% da tela de cima)
+   ============================================================ */
+const AJUSTES = {
+  gato:       { escala: 1.05, cabeca: 1.60, encaixe: 44.2 },
+  cachorro:   { escala: 1.15, cabeca: 1.45, encaixe: 44.0 },
+  peixinho:   { escala: 1.45, cabeca: 1.15, encaixe: 54.6 },
+  vaca:       { escala: 1.00, cabeca: 1.45, encaixe: 43.2 },
+  galinha:    { escala: 1.00, cabeca: 1.00, encaixe: 43.2 },
+  pato:       { escala: 1.00, cabeca: 1.15, encaixe: 45.2 },
+  leao:       { escala: 1.15, cabeca: 1.90, encaixe: 51.6 },
+  macaco:     { escala: 1.00, cabeca: 1.45, encaixe: 43.2 },
+  sapo:       { escala: 1.00, cabeca: 1.30, encaixe: 46.0 },
+  golfinho:   { escala: 1.45, cabeca: 1.75, encaixe: 50.6 },
+  baleia:     { escala: 1.30, cabeca: 1.60, encaixe: 51.0 },
+  pinguim:    { escala: 1.00, cabeca: 1.15, encaixe: 44.6 },
+  onca:       { escala: 1.15, cabeca: 1.45, encaixe: 51.6 },
+  arara:      { escala: 1.15, cabeca: 1.75, encaixe: 52.2 },
+  jacare:     { escala: 1.00, cabeca: 1.60, encaixe: 51.0 },
+  trex:       { escala: 1.15, cabeca: 1.75, encaixe: 51.2 }
+};
+
+function ajusteDe(id){
+  return AJUSTES[id] || {};
 }
 
 const POSICOES = {
@@ -565,6 +594,9 @@ function abrirFase(numero){
   aplicarPlaca(faseAtual.config.visual);
   aplicarTema(faseAtual.config.visual);
   carregarBase(faseAtual.config.visual);
+  /* reset do alvo no valor padrão */
+  stage.style.setProperty('--snap-y', ALVO.y + '%');
+  bodyWrap.style.setProperty('--body-scale', 1);
   atualizarHUD();
   requestAnimationFrame(() => {
     ajustarUnidade();
@@ -604,6 +636,13 @@ function iniciarRodada(){
   atual = { id: idCorreto, ...ANIMAIS[idCorreto] };
   ultimoId = idCorreto;
 
+  /* aplica ajuste do corpo */
+  const ajAtual = ajusteDe(idCorreto);
+  bodyWrap.style.setProperty('--body-scale', ajAtual.escala || 1);
+
+  /* move o alvo pro encaixe do bicho atual */
+  stage.style.setProperty('--snap-y', (ajAtual.encaixe || ALVO.y) + '%');
+
   bodyWrap.innerHTML = '';
   const imgCorpo = new Image();
   imgCorpo.alt = ''; imgCorpo.draggable = false;
@@ -619,6 +658,7 @@ function iniciarRodada(){
 
   idsRodada.forEach((id, i) => {
     const animal = { id, ...ANIMAIS[id] };
+    const ajH = ajusteDe(id);
     const el = document.createElement('div');
     el.className = 'head';
     el.dataset.animal = id;
@@ -627,7 +667,7 @@ function iniciarRodada(){
     el.style.left = posicoes[i].x + '%';
     el.style.top  = posicoes[i].y + '%';
     el.style.setProperty('--s','0');
-    el.style.setProperty('--zoom', (animal.zoom || 1.15));
+    el.style.setProperty('--zoom', ajH.cabeca || 1.15);
     el.style.opacity = '0';
 
     const inner = document.createElement('div');
@@ -684,8 +724,9 @@ function ligarArraste(el, animal){
     const sr = stage.getBoundingClientRect();
     const cx = r.left + r.width/2  - sr.left;
     const cy = r.top  + r.height/2 - sr.top;
+    const ajL = ajusteDe(animal.id);
     const alvoX = sr.width  * 0.5;
-    const alvoY = sr.height * 0.432;
+    const alvoY = sr.height * ((ajL.encaixe || 43.2)/100);
     if (Math.hypot(cx-alvoX, cy-alvoY) < sr.width * 0.32) escolher(el, animal);
     else voltarAoLugar(el);
   }
@@ -708,8 +749,10 @@ function acertou(el){
   const sr = stage.getBoundingClientRect();
   const bx = parseFloat(el.dataset.bx)/100 * sr.width;
   const by = parseFloat(el.dataset.by)/100 * sr.height;
+  const ajA = ajusteDe(atual.id);
+  const snapY = ajA.encaixe || ALVO.y;
   const tx = sr.width  * (ALVO.x/100) - bx;
-  const ty = sr.height * (ALVO.y/100) - by;
+  const ty = sr.height * (snapY/100) - by;
   el.style.transition = 'transform .42s cubic-bezier(.34,1.56,.64,1), opacity .3s';
   void el.offsetWidth;
   el.style.zIndex = '12';
@@ -727,7 +770,7 @@ function acertou(el){
   }, 400);
   vibrar(35);
   [...headsEl.children].forEach(h => { if (h !== el) h.classList.add('esconder'); });
-  explodir(sr.width * (ALVO.x/100), sr.height * (ALVO.y/100));
+  explodir(sr.width * (ALVO.x/100), sr.height * (snapY/100));
   tocarAcerto();
 
   setPontos(getPontos() + PONTOS_POR_ACERTO);
