@@ -115,7 +115,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 #decor{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .decor-item{position:absolute;transform:translate(-50%,-50%);opacity:.55;line-height:1;filter:drop-shadow(0 3px 6px #00000022);user-select:none;}
 
-/* ---------- TOPBAR (vertical 2em) ---------- */
+/* ---------- TOPBAR ---------- */
 #topbarJogo{
   position:absolute;
   left:50%;
@@ -160,7 +160,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   box-shadow: 0 1px 0 rgba(0,0,0,0.35);
 }
 
-/* ---------- PIPS (vertical 2em) ---------- */
+/* ---------- PIPS (1em 1em + gap 0.45em) ---------- */
 .pips{
   position:absolute;
   left:50%;
@@ -170,7 +170,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   justify-content:center;
   align-items:center;
   gap:0.45em;
-  padding:2em 2em;
+  padding:1em 1em;
   font-size:24px;
   z-index:50;
   --borda: 12px;
@@ -189,7 +189,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   transform: scale(1.15);
 }
 
-/* ---------- HUD (vertical 2em) ---------- */
+/* ---------- HUD (0.5em 1.5em + gap 0.4em) ---------- */
 #hudJogo{
   position:absolute;
   left:0;
@@ -207,8 +207,8 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:0.6em;
-  padding:2em 2.2em;
+  gap:0.4em;
+  padding:0.5em 1.5em;
   min-width:100px;
   font-size:clamp(16px,4.8vw,22px);
   font-weight:800;
@@ -353,7 +353,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   80%{transform:translateX(-5px) rotate(-3deg);}
 }
 
-/* ---------- NOME (voltou ao antigo) ---------- */
+/* ---------- NOME ---------- */
 #nomeLabel{
   position:absolute;
   left:50%;
