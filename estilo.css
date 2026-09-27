@@ -105,7 +105,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   box-shadow:none;
   overflow:hidden;
   touch-action:none;
-  --hs: min(17vw, 80px);
+  --hs: min(19vw, 90px);
   transition:background .5s;
   background-size:cover;
   background-position:center;
@@ -235,11 +235,11 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   100% { transform: scale(1);    filter: brightness(1);   }
 }
 
-/* ---------- ALVO ---------- */
+/* ---------- ALVO (posição calculada por JS) ---------- */
 .target{
   position:absolute;
   left:50%;
-  top:var(--snap-y, 43.2%);
+  top:var(--snap-y, 43%);
   width:calc(var(--hs) * 2.6);
   height:calc(var(--hs) * 2.6);
   border-radius:50%;
@@ -326,12 +326,12 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   line-height:1;
   pointer-events:none;
   -webkit-user-drag:none;
-  overflow:hidden;
+  overflow:visible;
   transition:background .25s, box-shadow .25s, border-color .25s;
 }
 .head-inner img{
-  width:82%;
-  height:82%;
+  width:90%;
+  height:90%;
   object-fit:contain;
   -webkit-user-drag:none;
   transition:transform .25s;
@@ -343,8 +343,13 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   border-color:transparent;
   backdrop-filter:none;
   -webkit-backdrop-filter:none;
+  overflow:visible;
 }
-.head-inner.encaixada img{width:100%;height:100%;transform:scale(1.05);}
+.head-inner.encaixada img{
+  width:100%;
+  height:100%;
+  transform: scale(var(--zoom, 1.05));
+}
 
 .head-inner.shake{animation:tremer .5s;}
 @keyframes tremer{
