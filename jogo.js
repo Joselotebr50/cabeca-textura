@@ -88,25 +88,26 @@ function aplicarPlaca(visual){
    ------------------------------------------------------------
    escala  = tamanho do CORPO   (1 = normal)
    cabeca  = tamanho da CABEÇA  (1.15 = padrão)
-   encaixe = onde a cabeça cai no acerto (% da tela de cima)
+   ajusteY = empurrar a cabeça pra cima (negativo) ou baixo
+             (positivo) do topo do corpo. Padrão 0.
    ============================================================ */
 const AJUSTES = {
-  gato:       { escala: 1.05, cabeca: 1.60, encaixe: 44.2 },
-  cachorro:   { escala: 1.15, cabeca: 1.45, encaixe: 44.0 },
-  peixinho:   { escala: 1.45, cabeca: 1.15, encaixe: 54.6 },
-  vaca:       { escala: 1.00, cabeca: 1.45, encaixe: 43.2 },
-  galinha:    { escala: 1.00, cabeca: 1.00, encaixe: 43.2 },
-  pato:       { escala: 1.00, cabeca: 1.15, encaixe: 45.2 },
-  leao:       { escala: 1.15, cabeca: 1.90, encaixe: 51.6 },
-  macaco:     { escala: 1.00, cabeca: 1.45, encaixe: 43.2 },
-  sapo:       { escala: 1.00, cabeca: 1.30, encaixe: 46.0 },
-  golfinho:   { escala: 1.45, cabeca: 1.75, encaixe: 50.6 },
-  baleia:     { escala: 1.30, cabeca: 1.60, encaixe: 51.0 },
-  pinguim:    { escala: 1.00, cabeca: 1.15, encaixe: 44.6 },
-  onca:       { escala: 1.15, cabeca: 1.45, encaixe: 51.6 },
-  arara:      { escala: 1.15, cabeca: 1.75, encaixe: 52.2 },
-  jacare:     { escala: 1.00, cabeca: 1.60, encaixe: 51.0 },
-  trex:       { escala: 1.15, cabeca: 1.75, encaixe: 51.2 }
+  gato:       { escala: 1.05, cabeca: 1.60 },
+  cachorro:   { escala: 1.15, cabeca: 1.45 },
+  peixinho:   { escala: 1.45, cabeca: 1.15, ajusteY: 3 },
+  vaca:       { escala: 1.00, cabeca: 1.45 },
+  galinha:    { escala: 1.00, cabeca: 1.00 },
+  pato:       { escala: 1.00, cabeca: 1.15 },
+  leao:       { escala: 1.15, cabeca: 1.90, ajusteY: 2 },
+  macaco:     { escala: 1.00, cabeca: 1.45 },
+  sapo:       { escala: 1.00, cabeca: 1.30 },
+  golfinho:   { escala: 1.45, cabeca: 1.75, ajusteY: 1 },
+  baleia:     { escala: 1.30, cabeca: 1.60, ajusteY: 1 },
+  pinguim:    { escala: 1.00, cabeca: 1.15 },
+  onca:       { escala: 1.15, cabeca: 1.45, ajusteY: 2 },
+  arara:      { escala: 1.15, cabeca: 1.75, ajusteY: 2 },
+  jacare:     { escala: 1.00, cabeca: 1.60, ajusteY: 2 },
+  trex:       { escala: 1.15, cabeca: 1.75, ajusteY: 2 }
 };
 
 function ajusteDe(id){
@@ -251,6 +252,27 @@ function preloadProximaFase(){
   }, 3000);
 }
 
+/* ============================================================
+   ENCAIXE DINÂMICO
+   ============================================================ */
+function calcularSnapY(){
+  const img = bodyWrap ? bodyWrap.querySelector('img') : null;
+  if (!img) return ALVO.y;
+  const ir = img.getBoundingClientRect();
+  const sr = stage.getBoundingClientRect();
+  if (sr.height === 0) return ALVO.y;
+  const topoPct = ((ir.top - sr.top) / sr.height) * 100;
+  const aj = atual ? ajusteDe(atual.id) : {};
+  const offset = typeof aj.ajusteY === 'number' ? aj.ajusteY : 0;
+  return topoPct + offset;
+}
+
+function aplicarSnapY(){
+  const y = calcularSnapY();
+  stage.style.setProperty('--snap-y', y + '%');
+  return y;
+}
+
 /* ---------- SVG POR TIPO ---------- */
 function bodySVG(a){
   const t = a.tipo || 'quadrupede';
@@ -378,7 +400,6 @@ function bodyDragao(a){
   </svg>`;
 }
 
-/* ---------- SVG DA BASE (fallback) ---------- */
 function baseSVG(visual){
   const cores = {
     casa:     { a:'#8B7A66', b:'#A89478', c:'#B8A488' },
@@ -425,7 +446,7 @@ function limparTema(){ stage.style.backgroundImage = ''; decor.innerHTML = ''; }
 function ajustarUnidade(){
   const w = stage.clientWidth || 320;
   const n = faseAtual ? faseAtual.config.opcoes : 3;
-  const fator = n >= 5 ? 0.16 : n === 4 ? 0.17 : 0.20;
+  const fator = n >= 5 ? 0.18 : n === 4 ? 0.20 : 0.23;
   stage.style.setProperty('--hs', (w * fator) + 'px');
 }
 window.addEventListener('resize', ajustarUnidade);
@@ -594,7 +615,6 @@ function abrirFase(numero){
   aplicarPlaca(faseAtual.config.visual);
   aplicarTema(faseAtual.config.visual);
   carregarBase(faseAtual.config.visual);
-  /* reset do alvo no valor padrão */
   stage.style.setProperty('--snap-y', ALVO.y + '%');
   bodyWrap.style.setProperty('--body-scale', 1);
   atualizarHUD();
@@ -636,18 +656,21 @@ function iniciarRodada(){
   atual = { id: idCorreto, ...ANIMAIS[idCorreto] };
   ultimoId = idCorreto;
 
-  /* aplica ajuste do corpo */
   const ajAtual = ajusteDe(idCorreto);
   bodyWrap.style.setProperty('--body-scale', ajAtual.escala || 1);
-
-  /* move o alvo pro encaixe do bicho atual */
-  stage.style.setProperty('--snap-y', (ajAtual.encaixe || ALVO.y) + '%');
 
   bodyWrap.innerHTML = '';
   const imgCorpo = new Image();
   imgCorpo.alt = ''; imgCorpo.draggable = false;
-  imgCorpo.onload = () => { bodyWrap.innerHTML = ''; bodyWrap.appendChild(imgCorpo); };
-  imgCorpo.onerror = () => { bodyWrap.innerHTML = bodySVG(atual); };
+  imgCorpo.onload = () => {
+    bodyWrap.innerHTML = '';
+    bodyWrap.appendChild(imgCorpo);
+    requestAnimationFrame(() => aplicarSnapY());
+  };
+  imgCorpo.onerror = () => {
+    bodyWrap.innerHTML = bodySVG(atual);
+    requestAnimationFrame(() => aplicarSnapY());
+  };
   imgCorpo.src = `imagens/${atual.id}_corpo.png`;
 
   const outrosIds = shuffle(lista.filter(id => id !== idCorreto));
@@ -724,9 +747,9 @@ function ligarArraste(el, animal){
     const sr = stage.getBoundingClientRect();
     const cx = r.left + r.width/2  - sr.left;
     const cy = r.top  + r.height/2 - sr.top;
-    const ajL = ajusteDe(animal.id);
+    const snapY = parseFloat(getComputedStyle(stage).getPropertyValue('--snap-y')) || ALVO.y;
     const alvoX = sr.width  * 0.5;
-    const alvoY = sr.height * ((ajL.encaixe || 43.2)/100);
+    const alvoY = sr.height * (snapY / 100);
     if (Math.hypot(cx-alvoX, cy-alvoY) < sr.width * 0.32) escolher(el, animal);
     else voltarAoLugar(el);
   }
@@ -749,8 +772,7 @@ function acertou(el){
   const sr = stage.getBoundingClientRect();
   const bx = parseFloat(el.dataset.bx)/100 * sr.width;
   const by = parseFloat(el.dataset.by)/100 * sr.height;
-  const ajA = ajusteDe(atual.id);
-  const snapY = ajA.encaixe || ALVO.y;
+  const snapY = aplicarSnapY();
   const tx = sr.width  * (ALVO.x/100) - bx;
   const ty = sr.height * (snapY/100) - by;
   el.style.transition = 'transform .42s cubic-bezier(.34,1.56,.64,1), opacity .3s';
@@ -1061,6 +1083,32 @@ if (!suportaTelaCheia){ const b = document.getElementById('btnTelaCheia'); if (b
 ['fullscreenchange','webkitfullscreenchange','msfullscreenchange'].forEach(ev => document.addEventListener(ev, atualizarIconeTelaCheia));
 const btnTC = document.getElementById('btnTelaCheia');
 if (btnTC) btnTC.addEventListener('click', alternarTelaCheia);
+
+/* ============================================================
+   PRÉ-CARREGAMENTO EM BACKGROUND
+   ------------------------------------------------------------
+   Baixa todas as bases, placas, fundos e bichos em segundo plano
+   assim que o app abre. Não trava nada — roda escondido.
+   ============================================================ */
+function preloadTudo(){
+  const temas = ['casa','fazenda','selva','agua','rainbow','trofeu','brasil','fantasia'];
+  const todosBichos = Object.keys(ANIMAIS);
+
+  temas.forEach(v => {
+    new Image().src = `imagens/base_${v}.png`;
+    new Image().src = `placas/${v}.png`;
+    const imgFundo = new Image();
+    imgFundo.src = `fundos/${v}.jpg`;
+  });
+
+  todosBichos.forEach(id => {
+    new Image().src = `imagens/${id}_corpo.png`;
+    new Image().src = `imagens/${id}_cabeca.png`;
+  });
+}
+
+/* espera 2 segundos pra não competir com o carregamento do menu */
+setTimeout(preloadTudo, 2000);
 
 carregarPerfis();
 atualizarPerfilMenu();
