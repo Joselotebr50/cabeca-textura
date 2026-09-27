@@ -70,10 +70,6 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 
 /* ============================================================
    PLACA — 9-slice (usa placas/*.png)
-   ============================================================
-   O JS troca o border-image-source pelo tema da fase.
-   O slice de 60px corta os cantos da imagem; as bordas e o
-   centro esticam SEM distorcer os detalhes.
    ============================================================ */
 .placa{
   --borda: 12px;
@@ -119,27 +115,27 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 #decor{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .decor-item{position:absolute;transform:translate(-50%,-50%);opacity:.55;line-height:1;filter:drop-shadow(0 3px 6px #00000022);user-select:none;}
 
-/* ---------- TOPBAR ---------- */
+/* ---------- TOPBAR (maior) ---------- */
 #topbarJogo{
   position:absolute;
   left:50%;
-  top:9.6%;
+  top:10%;
   transform:translate(-50%,-50%);
-  width:68%;
-  max-width:420px;
-  padding:4px 10px;
+  width:88%;
+  max-width:520px;
+  padding:10px 18px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:6px;
+  gap:10px;
   z-index:50;
-  --borda: 14px;
+  --borda: 18px;
 }
 #topbarJogo h2{
   color:inherit;
   text-shadow:inherit;
-  font-size:clamp(13px,3.9vw,17px);
-  letter-spacing:1px;
+  font-size:clamp(18px,5.5vw,24px);
+  letter-spacing:1.5px;
   font-weight:800;
   margin:0;
   text-align:center;
@@ -149,9 +145,9 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   text-overflow:ellipsis;
 }
 #topbarJogo .icon-btn{
-  padding:4px 9px;
-  font-size:15px;
-  min-width:30px;
+  padding:6px 12px;
+  font-size:18px;
+  min-width:38px;
   background: rgba(255,255,255,0.22);
   color: inherit;
   border: 1px solid rgba(0,0,0,0.3);
@@ -164,20 +160,20 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   box-shadow: 0 1px 0 rgba(0,0,0,0.35);
 }
 
-/* ---------- PIPS ---------- */
+/* ---------- PIPS (maiores) ---------- */
 .pips{
   position:absolute;
   left:50%;
-  top:14.8%;
+  top:15.5%;
   transform:translate(-50%,-50%);
   display:flex;
   justify-content:center;
   align-items:center;
-  gap:5px;
-  padding:3px 14px;
-  font-size:18px;
+  gap:7px;
+  padding:6px 20px;
+  font-size:24px;
   z-index:50;
-  --borda: 10px;
+  --borda: 12px;
 }
 .pip{
   opacity:1;
@@ -198,7 +194,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   position:absolute;
   left:0;
   right:0;
-  top:22.5%;
+  top:24%;
   transform:translateY(-50%);
   padding:0 3%;
   display:flex;
@@ -212,14 +208,14 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   align-items:center;
   justify-content:center;
   gap:6px;
-  padding:3px 12px;
-  min-width:90px;
-  font-size:clamp(15px,4.4vw,20px);
+  padding:4px 14px;
+  min-width:100px;
+  font-size:clamp(16px,4.8vw,22px);
   font-weight:800;
   letter-spacing:.5px;
   transition: transform .1s;
   pointer-events:auto;
-  --borda: 11px;
+  --borda: 13px;
 }
 .hud-painel .hud-icone{
   font-size:1.1em;
@@ -290,7 +286,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
 }
 #bodyWrap svg,#bodyWrap img{width:100%;height:auto;display:block;}
 
-/* ---------- CABEÇAS (vidro fosco transparente) ---------- */
+/* ---------- CABEÇAS ---------- */
 #heads{position:absolute;inset:0;pointer-events:none;z-index:5;}
 .head{
   position:absolute;
@@ -363,9 +359,9 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   left:50%;
   top:83%;
   transform:translate(-50%,-50%) scale(.4);
-  padding:5px 22px 6px;
+  padding:6px 26px 7px;
   font-weight:800;
-  font-size:clamp(15px,4.6vw,21px);
+  font-size:clamp(17px,5.2vw,24px);
   letter-spacing:2px;
   text-transform:uppercase;
   white-space:nowrap;
@@ -373,7 +369,7 @@ button{font-family:inherit;font-weight:700;cursor:pointer;border:none;}
   pointer-events:none;
   z-index:40;
   transition:opacity .28s, transform .38s cubic-bezier(.34,1.56,.64,1);
-  --borda: 13px;
+  --borda: 15px;
 }
 #nomeLabel.show{opacity:1;transform:translate(-50%,-50%) scale(1);animation:balanca .5s ease-in-out .38s;}
 @keyframes balanca{0%,100%{transform:translate(-50%,-50%) scale(1) rotate(0);}25%{transform:translate(-50%,-50%) scale(1.06) rotate(-2deg);}75%{transform:translate(-50%,-50%) scale(1.06) rotate(2deg);}}
